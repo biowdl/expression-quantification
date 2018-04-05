@@ -4,7 +4,7 @@ import "tasks/htseq.wdl" as htseq
 
 workflow QuantifyFromBam {
     File inputBam
-    File referenceGff
+    File referenceGtf
     File referenceRefFlat
 
     String sample
@@ -19,7 +19,7 @@ workflow QuantifyFromBam {
             geneAbundanceFile = outputDir + "/stringtie/" + sample + ".abundance",
             firstStranded = if strandedness == "FR" then true else false,
             secondStranded = if strandedness == "RF" then true else false,
-            referenceGFF = referenceGff
+            referenceGtf = referenceGtf
     }
 
     call FetchCounts as fetchCountsTPM {
@@ -42,7 +42,7 @@ workflow QuantifyFromBam {
             alignmentFiles = inputBam,
             outputTable = outputDir + "/fragments_per_gene/" + sample + ".fragments_per_gene",
             stranded = HTSeqStrandOptions[strandedness],
-            gffFile = referenceGff
+            gtfFile = referenceGtf
     }
 
     call biopet.BaseCounter as baseCounter {
