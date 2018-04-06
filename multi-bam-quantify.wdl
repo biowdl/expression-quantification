@@ -1,4 +1,4 @@
-import "quantification/quantify-from-bam.wdl" as quantify
+import "expression-quantification/quantify-from-bam.wdl" as quantify
 import "tasks/mergecounts.wdl" as mergeCounts
 
 workflow MultiBamExpressionQuantification {
