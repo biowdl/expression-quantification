@@ -22,14 +22,14 @@ workflow QuantifyFromBam {
             referenceGtf = referenceGtf
     }
 
-    call FetchCounts as fetchCountsTPM {
+    call FetchCounts as fetchCountsStringtieTPM {
         input:
             abundanceFile = stringtie.geneAbundance,
             outputFile = outputDir + "/TPM/" + sample + ".TPM",
             column = 9
     }
 
-    call FetchCounts as fetchCountsFPKM {
+    call FetchCounts as fetchCountsStringtieFPKM {
         input:
             abundanceFile = stringtie.geneAbundance,
             outputFile = outputDir + "/FPKM/" + sample + ".FPKM",
@@ -54,8 +54,8 @@ workflow QuantifyFromBam {
     }
 
     output {
-        File TPMTable = fetchCountsTPM.counts
-        File FPKMTable = fetchCountsFPKM.counts
+        File TPMTable = fetchCountsStringtieTPM.counts
+        File FPKMTable = fetchCountsStringtieFPKM.counts
         File fragmentsPerGeneTable = htSeqCount.counts
         File baseCountsPerGeneTable = if strandedness == "FR" then baseCounter.geneSense else (
             if strandedness == "RF" then baseCounter.geneAntisense else baseCounter.gene)

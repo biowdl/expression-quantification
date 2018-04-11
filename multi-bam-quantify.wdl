@@ -21,7 +21,7 @@ workflow MultiBamExpressionQuantification {
     }
 
     # Merge count tables into one multisample count table per count type
-    call mergeCounts.MergeCounts as mergedTPMs {
+    call mergeCounts.MergeCounts as mergedStringtieTPMs {
         input:
             inputFiles = expressionQuantifications.TPMTable,
             outputFile = outputDir + "/TPM/all_samples.TPM",
@@ -29,7 +29,7 @@ workflow MultiBamExpressionQuantification {
             measurementVar = "TPM"
     }
 
-    call mergeCounts.MergeCounts as mergedFPKMs {
+    call mergeCounts.MergeCounts as mergedStringtieFPKMs {
         input:
             inputFiles = expressionQuantifications.FPKMTable,
             outputFile = outputDir + "/FPKM/all_samples.FPKM",
@@ -37,10 +37,10 @@ workflow MultiBamExpressionQuantification {
             measurementVar = "FPKM"
     }
 
-    call mergeCounts.MergeCounts as mergedFragmentsPerGenes {
+    call mergeCounts.MergeCounts as mergedHTSeqFragmentsPerGenes {
         input:
             inputFiles = expressionQuantifications.fragmentsPerGeneTable,
-             outputFile = outputDir + "/fragments_per_gene/all_samples.fragments_per_gene",
+            outputFile = outputDir + "/fragments_per_gene/all_samples.fragments_per_gene",
             idVar = "feature",
             measurementVar = "counts"
     }
@@ -55,9 +55,8 @@ workflow MultiBamExpressionQuantification {
 
     output {
         File baseCountsPerGeneTable = mergedBaseCountsPerGene.mergedCounts
-        File fragmentsPerGeneTable = mergedFragmentsPerGenes.mergedCounts
-        File FPKMTable = mergedFPKMs.mergedCounts
-        File TPMTable = mergedTPMs.mergedCounts
-
+        File fragmentsPerGeneTable = mergedHTSeqFragmentsPerGenes.mergedCounts
+        File FPKMTable = mergedStringtieFPKMs.mergedCounts
+        File TPMTable = mergedStringtieTPMs.mergedCounts
     }
 }
