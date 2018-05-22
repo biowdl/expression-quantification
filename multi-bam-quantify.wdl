@@ -4,7 +4,7 @@ import "tasks/biopet.wdl" as biopet
 import "tasks/htseq.wdl" as htseq
 
 workflow MultiBamExpressionQuantification {
-    Array[Pair[String,File]]+ bams
+    Array[Pair[String,Pair[File,File]]]+ bams #(sample, (bam, index))
     String outputDir
     String strandedness
     File ref_gtf
@@ -12,9 +12,11 @@ workflow MultiBamExpressionQuantification {
 
     # call counters per sample
     scatter (sampleBam in bams) {
+        Pair[File,File] bamFile = sampleBam.right
+
         call stringtie_task.Stringtie as stringtie {
             input:
-                alignedReads = sampleBam.right,
+                alignedReads = bamFile.left,
                 assembledTranscriptsFile = outputDir + "/stringtie/" + sampleBam.left + ".gff",
                 geneAbundanceFile = outputDir + "/stringtie/" + sampleBam.left + ".abundance",
                 firstStranded = if strandedness == "FR" then true else false,
@@ -39,7 +41,7 @@ workflow MultiBamExpressionQuantification {
         Map[String, String] HTSeqStrandOptions = {"FR": "yes", "RF": "reverse", "None": "no"}
         call htseq.HTSeqCount as htSeqCount {
             input:
-                alignmentFiles = sampleBam.right,
+                alignmentFiles = bamFile.left,
                 outputTable = outputDir + "/fragments_per_gene/" + sampleBam.left + ".fragments_per_gene",
                 stranded = HTSeqStrandOptions[strandedness],
                 gtfFile = ref_gtf
@@ -47,7 +49,8 @@ workflow MultiBamExpressionQuantification {
 
         call biopet.BaseCounter as baseCounter {
             input:
-                bam = sampleBam.right,
+                bam = bamFile.left,
+                bamIndex = bamFile.right,
                 outputDir = outputDir + "/BaseCounter/",
                 prefix = sampleBam.left,
                 refFlat = ref_refflat
