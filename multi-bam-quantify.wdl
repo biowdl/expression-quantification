@@ -26,14 +26,14 @@ workflow MultiBamExpressionQuantification {
 
         call FetchCounts as fetchCountsStringtieTPM {
             input:
-                abundanceFile = stringtie.geneAbundance,
+                abundanceFile = select_first([stringtie.geneAbundance]),
                 outputFile = outputDir + "/TPM/" + sampleBam.left + ".TPM",
                 column = 9
         }
 
         call FetchCounts as fetchCountsStringtieFPKM {
             input:
-                abundanceFile = stringtie.geneAbundance,
+                abundanceFile = select_first([stringtie.geneAbundance]),
                 outputFile = outputDir + "/FPKM/" + sampleBam.left + ".FPKM",
                 column = 8
         }
