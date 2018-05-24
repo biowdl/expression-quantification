@@ -89,7 +89,7 @@ workflow MultiBamExpressionQuantification {
         input:
             inputFiles = if strandedness == "FR" then baseCounter.geneSense else (
                 if strandedness == "RF" then baseCounter.geneAntisense else baseCounter.gene),
-            outputFile = outputDir + "/all_samples.base.gene.counts",
+            outputFile = outputDir + "/BaseCounter/all_samples.base.gene.counts",
             featureColumn = 1,
             valueColumn = 2,
             inputHasHeader = false
