@@ -62,24 +62,27 @@ workflow MultiBamExpressionQuantification {
         input:
             inputFiles = fetchCountsStringtieTPM.counts,
             outputFile = outputDir + "/TPM/all_samples.TPM",
-            idVar = "'Gene ID'",
-            measurementVar = "TPM"
+            featureColumn = 1,
+            valueColumn = 2,
+            inputHasHeader = true
     }
 
     call mergeCounts.MergeCounts as mergedStringtieFPKMs {
         input:
             inputFiles = fetchCountsStringtieFPKM.counts,
             outputFile = outputDir + "/FPKM/all_samples.FPKM",
-            idVar = "'Gene ID'",
-            measurementVar = "FPKM"
+            featureColumn = 1,
+            valueColumn = 2,
+            inputHasHeader = true
     }
 
     call mergeCounts.MergeCounts as mergedHTSeqFragmentsPerGenes {
         input:
             inputFiles = htSeqCount.counts,
             outputFile = outputDir + "/fragments_per_gene/all_samples.fragments_per_gene",
-            idVar = "feature",
-            measurementVar = "counts"
+            featureColumn = 1,
+            valueColumn = 2,
+            inputHasHeader = false
     }
 
     call mergeCounts.MergeCounts as mergedBaseCountsPerGene {
@@ -87,8 +90,9 @@ workflow MultiBamExpressionQuantification {
             inputFiles = if strandedness == "FR" then baseCounter.geneSense else (
                 if strandedness == "RF" then baseCounter.geneAntisense else baseCounter.gene),
             outputFile = outputDir + "/all_samples.base.gene.counts",
-            idVar = "X1",
-            measurementVar = "X2"
+            featureColumn = 1,
+            valueColumn = 2,
+            inputHasHeader = false
     }
 
     output {
