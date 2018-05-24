@@ -106,6 +106,7 @@ task FetchCounts {
     Int column
 
     command <<<
+        mkdir -p ${sub(outputFile, basename(outputFile) + "$", "")}
         awk -F "\t" '{print $1 "\t" $${column}}' ${abundanceFile} > ${outputFile}
     >>>
 
