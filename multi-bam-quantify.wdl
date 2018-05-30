@@ -4,7 +4,8 @@ import "tasks/biopet.wdl" as biopet
 import "tasks/htseq.wdl" as htseq
 
 workflow MultiBamExpressionQuantification {
-    Array[Pair[String,Pair[File,File]]]+ bams #(sample, (bam, index))
+    #Array[Pair[String,Pair[File,File]]]+ bams #(sample, (bam, index))
+    Map[String, Pair[File, File]] bams
     String outputDir
     String strandedness
     File ref_gtf
