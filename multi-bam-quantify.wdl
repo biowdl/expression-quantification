@@ -4,34 +4,37 @@ import "tasks/biopet.wdl" as biopet
 import "tasks/htseq.wdl" as htseq
 
 workflow MultiBamExpressionQuantification {
-    Array[Pair[String,File]]+ bams
+    Array[Pair[String,Pair[File,File]]]+ bams #(sample, (bam, index))
+    #Map[String, Pair[File, File]] bams
     String outputDir
     String strandedness
-    File ref_gtf
-    File ref_refflat
+    File refGtf
+    File refRefflat
 
     # call counters per sample
     scatter (sampleBam in bams) {
+        Pair[File,File] bamFile = sampleBam.right
+
         call stringtie_task.Stringtie as stringtie {
             input:
-                alignedReads = sampleBam.right,
+                alignedReads = bamFile.left,
                 assembledTranscriptsFile = outputDir + "/stringtie/" + sampleBam.left + ".gff",
                 geneAbundanceFile = outputDir + "/stringtie/" + sampleBam.left + ".abundance",
                 firstStranded = if strandedness == "FR" then true else false,
                 secondStranded = if strandedness == "RF" then true else false,
-                referenceGtf = ref_gtf
+                referenceGtf = refGtf
         }
 
         call FetchCounts as fetchCountsStringtieTPM {
             input:
-                abundanceFile = stringtie.geneAbundance,
+                abundanceFile = select_first([stringtie.geneAbundance]),
                 outputFile = outputDir + "/TPM/" + sampleBam.left + ".TPM",
                 column = 9
         }
 
         call FetchCounts as fetchCountsStringtieFPKM {
             input:
-                abundanceFile = stringtie.geneAbundance,
+                abundanceFile = select_first([stringtie.geneAbundance]),
                 outputFile = outputDir + "/FPKM/" + sampleBam.left + ".FPKM",
                 column = 8
         }
@@ -39,18 +42,19 @@ workflow MultiBamExpressionQuantification {
         Map[String, String] HTSeqStrandOptions = {"FR": "yes", "RF": "reverse", "None": "no"}
         call htseq.HTSeqCount as htSeqCount {
             input:
-                alignmentFiles = sampleBam.right,
+                alignmentFiles = bamFile.left,
                 outputTable = outputDir + "/fragments_per_gene/" + sampleBam.left + ".fragments_per_gene",
                 stranded = HTSeqStrandOptions[strandedness],
-                gtfFile = ref_gtf
+                gtfFile = refGtf
         }
 
         call biopet.BaseCounter as baseCounter {
             input:
-                bam = sampleBam.right,
+                bam = bamFile.left,
+                bamIndex = bamFile.right,
                 outputDir = outputDir + "/BaseCounter/",
                 prefix = sampleBam.left,
-                refFlat = ref_refflat
+                refFlat = refRefflat
         }
     }
 
@@ -59,33 +63,37 @@ workflow MultiBamExpressionQuantification {
         input:
             inputFiles = fetchCountsStringtieTPM.counts,
             outputFile = outputDir + "/TPM/all_samples.TPM",
-            idVar = "'Gene ID'",
-            measurementVar = "TPM"
+            featureColumn = 1,
+            valueColumn = 2,
+            inputHasHeader = true
     }
 
     call mergeCounts.MergeCounts as mergedStringtieFPKMs {
         input:
             inputFiles = fetchCountsStringtieFPKM.counts,
             outputFile = outputDir + "/FPKM/all_samples.FPKM",
-            idVar = "'Gene ID'",
-            measurementVar = "FPKM"
+            featureColumn = 1,
+            valueColumn = 2,
+            inputHasHeader = true
     }
 
     call mergeCounts.MergeCounts as mergedHTSeqFragmentsPerGenes {
         input:
             inputFiles = htSeqCount.counts,
             outputFile = outputDir + "/fragments_per_gene/all_samples.fragments_per_gene",
-            idVar = "feature",
-            measurementVar = "counts"
+            featureColumn = 1,
+            valueColumn = 2,
+            inputHasHeader = false
     }
 
     call mergeCounts.MergeCounts as mergedBaseCountsPerGene {
         input:
             inputFiles = if strandedness == "FR" then baseCounter.geneSense else (
                 if strandedness == "RF" then baseCounter.geneAntisense else baseCounter.gene),
-            outputFile = outputDir + "/all_samples.base.gene.counts",
-            idVar = "X1",
-            measurementVar = "X2"
+            outputFile = outputDir + "/BaseCounter/all_samples.base.gene.counts",
+            featureColumn = 1,
+            valueColumn = 2,
+            inputHasHeader = false
     }
 
     output {
@@ -103,6 +111,7 @@ task FetchCounts {
     Int column
 
     command <<<
+        mkdir -p ${sub(outputFile, basename(outputFile) + "$", "")}
         awk -F "\t" '{print $1 "\t" $${column}}' ${abundanceFile} > ${outputFile}
     >>>
 
