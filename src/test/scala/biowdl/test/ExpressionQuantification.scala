@@ -24,21 +24,20 @@ package biowdl.test
 import java.io.File
 
 import nl.biopet.utils.biowdl.Pipeline
-import nl.biopet.utils.biowdl.references.Reference
+import nl.biopet.utils.biowdl.annotations.Annotation
 
-trait ExpressionQuantification
-    extends Pipeline with Reference {
+trait ExpressionQuantification extends Pipeline with Annotation {
+
+  def strandedness: String = "None"
 
   override def inputs: Map[String, Any] =
     super.inputs ++
       Map(
-        "pipeline.outputDir" -> outputDir.getAbsolutePath,
-        "pipeline.refFasta" -> referenceFasta.getAbsolutePath,
-        "pipeline.refFastaIndex" -> referenceFastaIndexFile.getAbsolutePath,
-        "pipeline.refDict" -> referenceFastaDictFile.getAbsolutePath,
-        "pipeline.sample.library.readgroup.mapping.bwaMem.referenceFasta" -> bwaMemFasta.getOrElse(throw new IllegalStateException),
-        "pipeline.sample.library.readgroup.mapping.bwaMem.indexFiles" -> bwaMemIndexFiles.map(_.getAbsolutePath)
+        "MultiBamExpressionQuantification.outputDir" -> outputDir.getAbsolutePath,
+        "MultiBamExpressionQuantification.strandedness" -> strandedness,
+        "MultiBamExpressionQuantification.refGtf" -> referenceGtf.map(_.getAbsolutePath),
+        "MultiBamExpressionQuantification.refRefflat" -> referenceRefflat.map(_.getAbsolutePath)
       )
 
-  def startFile: File = new File("./pipeline.wdl")
+  def startFile: File = new File("./multi-bam-quantify.wdl")
 }

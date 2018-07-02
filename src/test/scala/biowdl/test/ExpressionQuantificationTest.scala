@@ -21,8 +21,10 @@
 
 package biowdl.test
 
-import nl.biopet.utils.biowdl.references.TestReference
+import nl.biopet.utils.biowdl.annotations.TestAnnotation
 
-class ExpressionQuantificationTest extends ExpressionQuantification with TestReference {
 
-}
+trait ExpressionQuantificationTest extends ExpressionQuantification with TestAnnotation
+
+class ExpressionQuantificationSuccessTest extends ExpressionQuantificationTest with
+  ExpressionQuantificationSuccess
