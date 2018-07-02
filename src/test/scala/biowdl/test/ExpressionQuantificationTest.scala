@@ -23,8 +23,10 @@ package biowdl.test
 
 import nl.biopet.utils.biowdl.annotations.TestAnnotation
 
+trait ExpressionQuantificationTest
+    extends ExpressionQuantification
+    with TestAnnotation
 
-trait ExpressionQuantificationTest extends ExpressionQuantification with TestAnnotation
-
-class ExpressionQuantificationSuccessTest extends ExpressionQuantificationTest with
-  ExpressionQuantificationSuccess
+class ExpressionQuantificationSuccessTest
+    extends ExpressionQuantificationTest
+    with ExpressionQuantificationSuccess

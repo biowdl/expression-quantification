@@ -35,8 +35,10 @@ trait ExpressionQuantification extends Pipeline with Annotation {
       Map(
         "MultiBamExpressionQuantification.outputDir" -> outputDir.getAbsolutePath,
         "MultiBamExpressionQuantification.strandedness" -> strandedness,
-        "MultiBamExpressionQuantification.refGtf" -> referenceGtf.map(_.getAbsolutePath),
-        "MultiBamExpressionQuantification.refRefflat" -> referenceRefflat.map(_.getAbsolutePath)
+        "MultiBamExpressionQuantification.refGtf" -> referenceGtf.map(
+          _.getAbsolutePath),
+        "MultiBamExpressionQuantification.refRefflat" -> referenceRefflat.map(
+          _.getAbsolutePath)
       )
 
   def startFile: File = new File("./multi-bam-quantify.wdl")
