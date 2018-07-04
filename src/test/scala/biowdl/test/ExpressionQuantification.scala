@@ -48,7 +48,7 @@ trait ExpressionQuantification extends Pipeline with Annotation {
     }
 
     val sampleMap: Map[String, Any] = Map("Left" -> sample, "Right" -> innerMap)
-    sampleMap :: bamInput
+    bamInput ::= sampleMap
   })
 
   override def inputs: Map[String, Any] =
@@ -60,7 +60,7 @@ trait ExpressionQuantification extends Pipeline with Annotation {
           _.getAbsolutePath),
         "MultiBamExpressionQuantification.refRefflat" -> referenceRefflat.map(
           _.getAbsolutePath),
-        "MultiBamExpressionQuantification.bams" -> bamInput
+        "MultiBamExpressionQuantification.bams" -> bamInput.
       )
 
   def startFile: File = new File("./multi-bam-quantify.wdl")
