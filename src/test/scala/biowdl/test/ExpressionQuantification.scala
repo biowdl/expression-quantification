@@ -30,6 +30,27 @@ trait ExpressionQuantification extends Pipeline with Annotation {
 
   def strandedness: String = "None"
 
+  def bamFiles: Map[String, File]
+  var bamInput: List[Map[String, Any]] = List()
+
+  bamFiles.keys.foreach(sample => {
+    var innerMap: Map[String, String] =
+      Map("Left" -> bamFiles.get(sample).map(_.getAbsolutePath).getOrElse(""))
+
+    // Determine the samples index
+    val index1 = new File(innerMap.get("Left") + ".bai")
+    val index2 =
+      new File(innerMap.getOrElse("Left", "").stripSuffix(".bam") + ".bai")
+    (index1.exists(), index2.exists()) match {
+      case (true, _) => innerMap += ("Right" -> index1.getAbsolutePath)
+      case (_, true) => innerMap += ("Right" -> index2.getAbsolutePath)
+      case _         => throw new IllegalStateException("No index found")
+    }
+
+    val sampleMap: Map[String, Any] = Map("Left" -> sample, "Right" -> innerMap)
+    sampleMap :: bamInput
+  })
+
   override def inputs: Map[String, Any] =
     super.inputs ++
       Map(
@@ -38,7 +59,8 @@ trait ExpressionQuantification extends Pipeline with Annotation {
         "MultiBamExpressionQuantification.refGtf" -> referenceGtf.map(
           _.getAbsolutePath),
         "MultiBamExpressionQuantification.refRefflat" -> referenceRefflat.map(
-          _.getAbsolutePath)
+          _.getAbsolutePath),
+        "MultiBamExpressionQuantification.bams" -> bamInput
       )
 
   def startFile: File = new File("./multi-bam-quantify.wdl")

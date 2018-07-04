@@ -21,11 +21,18 @@
 
 package biowdl.test
 
+import java.io.File
+
 import nl.biopet.utils.biowdl.annotations.TestAnnotation
+import nl.biopet.utils.biowdl.fixtureFile
 
 trait ExpressionQuantificationTest
     extends ExpressionQuantification
-    with TestAnnotation
+    with TestAnnotation {
+  def bamFiles: Map[String, File] =
+    Map("sample1" -> fixtureFile("samples", "rna3", "rna3.bam"),
+        "sample2" -> fixtureFile("samples", "rna3", "rna3.bam"))
+}
 
 class ExpressionQuantificationSuccessTest
     extends ExpressionQuantificationTest
