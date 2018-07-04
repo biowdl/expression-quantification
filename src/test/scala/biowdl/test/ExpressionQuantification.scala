@@ -38,10 +38,19 @@ trait ExpressionQuantification extends Pipeline with Annotation {
           "Left" -> bamFiles.get(sample).map(_.getAbsolutePath).getOrElse(""),
           "Right" -> {
             // Determine the samples index
-            val index1 = new File(innerMap.get("Left") + ".bai")
-            val index2 =
-              new File(
-                innerMap.getOrElse("Left", "").stripSuffix(".bam") + ".bai")
+            val index1 = new File(
+              bamFiles
+                .getOrElse(sample, {
+                  throw new IllegalArgumentException("Missing bam file")
+                })
+                .getAbsolutePath + ".bai")
+            val index2 = new File(
+              bamFiles
+                .getOrElse(sample, {
+                  throw new IllegalArgumentException("Missing bam file")
+                })
+                .getAbsolutePath
+                .stripSuffix(".bam") + ".bai")
             (index1.exists(), index2.exists()) match {
               case (true, _) => index1.getAbsolutePath
               case (_, true) => index2.getAbsolutePath
