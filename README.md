@@ -10,7 +10,8 @@ determine various expression measures.
 
 ## Documentation
 
-TBD
+Documentation for this workflow can be found 
+[here](https://biowdl.github.io/expression-quantification/).
 
 ## About
 These workflows are part of [Biowdl](https://github.com/biowdl)

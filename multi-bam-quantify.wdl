@@ -28,14 +28,14 @@ workflow MultiBamExpressionQuantification {
         call FetchCounts as fetchCountsStringtieTPM {
             input:
                 abundanceFile = select_first([stringtie.geneAbundance]),
-                outputFile = outputDir + "/TPM/" + sampleBam.left + ".TPM",
+                outputFile = outputDir + "/stringtie/TPM/" + sampleBam.left + ".TPM",
                 column = 9
         }
 
         call FetchCounts as fetchCountsStringtieFPKM {
             input:
                 abundanceFile = select_first([stringtie.geneAbundance]),
-                outputFile = outputDir + "/FPKM/" + sampleBam.left + ".FPKM",
+                outputFile = outputDir + "/stringtie/FPKM/" + sampleBam.left + ".FPKM",
                 column = 8
         }
 
@@ -62,7 +62,7 @@ workflow MultiBamExpressionQuantification {
     call mergeCounts.MergeCounts as mergedStringtieTPMs {
         input:
             inputFiles = fetchCountsStringtieTPM.counts,
-            outputFile = outputDir + "/TPM/all_samples.TPM",
+            outputFile = outputDir + "/stringtie/TPM/all_samples.TPM",
             featureColumn = 1,
             valueColumn = 2,
             inputHasHeader = true
@@ -71,7 +71,7 @@ workflow MultiBamExpressionQuantification {
     call mergeCounts.MergeCounts as mergedStringtieFPKMs {
         input:
             inputFiles = fetchCountsStringtieFPKM.counts,
-            outputFile = outputDir + "/FPKM/all_samples.FPKM",
+            outputFile = outputDir + "/stringtie/FPKM/all_samples.FPKM",
             featureColumn = 1,
             valueColumn = 2,
             inputHasHeader = true

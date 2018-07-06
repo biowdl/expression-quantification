@@ -28,13 +28,13 @@ trait ExpressionQuantificationSuccess
     with PipelineSuccess {
   bamFiles.keys.foreach(sample => {
     addMustHaveFile("stringtie/" + sample + ".gff")
-    addMustHaveFile("TPM/" + sample + ".TPM")
-    addMustHaveFile("FPKM/" + sample + ".FPKM")
+    addMustHaveFile("stringtie/TPM/" + sample + ".TPM")
+    addMustHaveFile("stringtie/FPKM/" + sample + ".FPKM")
     addMustHaveFile("fragments_per_gene/" + sample + ".fragments_per_gene")
   })
   addMustHaveFile("BaseCounter")
-  addMustHaveFile("TPM/all_samples.TPM")
-  addMustHaveFile("FPKM/all_samples.FPKM")
+  addMustHaveFile("stringtie/TPM/all_samples.TPM")
+  addMustHaveFile("stringtie/FPKM/all_samples.FPKM")
   addMustHaveFile("fragments_per_gene/all_samples.fragments_per_gene")
   addMustHaveFile("/BaseCounter/all_samples.base.gene.counts")
 }
