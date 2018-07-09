@@ -14,19 +14,19 @@ which uses [HTSeq-Count](http://htseq.readthedocs.io/en/master/count.html),
 determine various expression measures.
 
 ## Usage
-`multi-bam-quantify` can be run using [Cromwell]
-(http://cromwell.readthedocs.io/en/stable/):
+`multi-bam-quantify` can be run using
+[Cromwell](http://cromwell.readthedocs.io/en/stable/):
 
 ```
 java -jar cromwell-<version>.jar run -i inputs.json multi-bam-quantify.wdl
 ```
 
-The inputs json can be generated using WOMtools as described in the [womtools
+The inputs json can be generated using WOMtools as described in the [WOMtools
 documentation](http://cromwell.readthedocs.io/en/stable/WOMtool/).
 
-The primary inputs are described below, additional inputs (such as
-precommands and JAR paths) are available. Please use the above mentioned
-WOMtools command to see all available inputs.
+The primary inputs are described below, additional inputs (such as precommands
+and JAR paths) are available. Please use the above mentioned WOMtools command
+to see all available inputs.
 
 | field | type | |
 |-|-|-|
@@ -85,7 +85,6 @@ These workflows are part of [Biowdl](https://biowdl.github.io/)
 developed by [the SASC team](http://sasc.lumc.nl/).
 
 ## Contact
-
 <p>
   <!-- Obscure e-mail address for spammers -->
 For any question related to Expression-Quantification, please use the
