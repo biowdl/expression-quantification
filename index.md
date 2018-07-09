@@ -1,3 +1,10 @@
+---
+layout: default
+---
+
+> BioWDL is currently still under development and not production ready.
+> Use at own risk!
+
 This repository contains the [Biowdl](https://github.com/biowdl)
 workflows usable for quantifying transcriptional expression measures.
 There is currently one pipeline available: `multi-bam-quantify`,
@@ -14,10 +21,12 @@ determine various expression measures.
 java -jar cromwell-<version>.jar run -i inputs.json multi-bam-quantify.wdl
 ```
 
-The inputs json can be generated using womtools as described in the [womtools
+The inputs json can be generated using WOMtools as described in the [womtools
 documentation](http://cromwell.readthedocs.io/en/stable/WOMtool/).
 
-The inputs are described below:
+The primary inputs are described below, additional inputs (such as
+precommands and JAR paths) are available. Please use the above mentioned
+WOMtools command to see all available inputs.
 
 | field | type | |
 |-|-|-|
@@ -26,21 +35,6 @@ The inputs are described below:
 | refGtf | `File` | A GTF file containing the annotations which will be used for counting.
 | bams | `Array[Pair[String, Pair[File, File]]]+` | Input bam files and their indexes. See below for more information |
 | outputDir | `String` | The path to the directory in which the output will be placed. This directory will be created if it doesn't exist yet. |
-| mergedHTSeqFragmentsPerGenes.preCommand | `String?` | |
-| baseCounter.memoryMultiplier | `Float?` | |
-| htSeqCount.format | `String?` ||
-| baseCounter.preCommand | `String?` | |
-| htSeqCount.memory | `Int?` | |
-| stringtie.threads | `Int?` | |
-| baseCounter.memory | `Float?` | |
-| htSeqCount.order | `String?` | |
-| mergedBaseCountsPerGene.preCommand | `String?` | |
-| mergedStringtieFPKMs.preCommand | `String?` | |
-| mergedStringtieTPMs.preCommand | `String?` | |
-| htSeqCount.preCommand | `String?` | |
-| baseCounter.toolJar | `File?` | |
-| stringtie.preCommand | `String?` | |
-
 
 Bams need to be given as an Array. Each of the elements in this array
 corresponds to one sample and is a Pair in which the left element is a
@@ -72,7 +66,19 @@ of file location (a string in json). Types ending in `?` indicate the input is
 optional, types ending in `+` indicate they require at least one element.
 
 ## Output
-
+The `multi-bam-quantify` workflow produces three folders:
+- BaseCounter: Contains BaseCounter ouput. Includes a file called
+`all_samples.base.gene.counts`, which contains the counts for all samples.
+- stringtie: Contains the stringtie output. Includes two additional folder:
+  - FPKM: Contains per sample FPKM counts, extracted from the stringtie
+  abundance output. Also contains a file called `all_samples.FPKM`, which
+  contains the FPKM values for all samples.
+  - TPM: Contains per sample TPM counts, extracted from the stringtie
+  abundance output. Also contains a file called `all_samples.TPM`, which
+  contains the TPM values for all samples.
+- fragments_per_gene: Contains the HTSeq-Count output. Also contains a file
+called `all_samples.fragments_per_gene`, which contains the counts for all
+samples.
 
 ## About
 These workflows are part of [Biowdl](https://biowdl.github.io/)
