@@ -2,9 +2,6 @@
 layout: default
 ---
 
-> BioWDL is currently still under development and not production ready.
-> Use at own risk!
-
 This repository contains the [Biowdl](https://github.com/biowdl)
 workflows usable for quantifying transcriptional expression measures.
 There is currently one pipeline available: `multi-bam-quantify`,
