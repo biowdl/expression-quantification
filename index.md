@@ -2,7 +2,7 @@
 layout: default
 ---
 
-This repository contains the [Biowdl](https://github.com/biowdl)
+This repository contains the [BioWDL](https://github.com/biowdl)
 workflows usable for quantifying transcriptional expression measures.
 There is currently one pipeline available: `multi-bam-quantify`,
 which uses [HTSeq-Count](http://htseq.readthedocs.io/en/master/count.html),
@@ -18,7 +18,7 @@ determine various expression measures.
 java -jar cromwell-<version>.jar run -i inputs.json multi-bam-quantify.wdl
 ```
 
-The inputs json can be generated using WOMtools as described in the [WOMtools
+The inputs JSON can be generated using WOMtools as described in the [WOMtools
 documentation](http://cromwell.readthedocs.io/en/stable/WOMtool/).
 
 The primary inputs are described below, additional inputs (such as precommands
@@ -27,17 +27,17 @@ to see all available inputs.
 
 | field | type | |
 |-|-|-|
-| strandedness | `String` |  Indicates the strandedness of the input data. This should be one of the following: `FR` (Foreward, Reverse),`RF` (Reverse, Foreward) or  `None`: (Unstranded) |
+| strandedness | `String` |  Indicates the strandedness of the input data. This should be one of the following: `FR` (Forward, Reverse),`RF` (Reverse, Forward) or  `None`: (Unstranded) |
 | refRefflat | `File` | A Refflat file containing the annotations which will be used for counting. |
 | refGtf | `File` | A GTF file containing the annotations which will be used for counting.
-| bams | `Array[Pair[String, Pair[File, File]]]+` | Input bam files and their indexes. See below for more information |
+| bams | `Array[Pair[String, Pair[File, File]]]+` | Input BAM files and their indexes. See below for more information |
 | outputDir | `String` | The path to the directory in which the output will be placed. This directory will be created if it doesn't exist yet. |
 
-Bams need to be given as an Array. Each of the elements in this array
+BAM files need to be given as an Array. Each of the elements in this array
 corresponds to one sample and is a Pair in which the left element is a
 name/label of the sample and the right element is a Pair. This inner Pair
-contains the bam file (left element) and its index (right element).
-An example of how to do this in json:
+contains the BAM file (left element) and its index (right element).
+An example of how to do this in JSON:
 ```
 [
   {
@@ -59,7 +59,7 @@ An example of how to do this in json:
 
 >All inputs have to be preceded by with `MultiBamExpressionQuantification.`.
 Type is indicated according to the WDL data types: `File` should be indicators
-of file location (a string in json). Types ending in `?` indicate the input is
+of file location (a string in JSON). Types ending in `?` indicate the input is
 optional, types ending in `+` indicate they require at least one element.
 
 ## Output
