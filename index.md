@@ -63,22 +63,22 @@ of file location (a string in json). Types ending in `?` indicate the input is
 optional, types ending in `+` indicate they require at least one element.
 
 ## Output
-The `multi-bam-quantify` workflow produces three folders:
-- BaseCounter: Contains BaseCounter ouput. Includes a file called
+The `multi-bam-quantify` workflow produces three directories:
+- **BaseCounter**: Contains BaseCounter ouput. Includes a file called
 `all_samples.base.gene.counts`, which contains the counts for all samples.
-- stringtie: Contains the stringtie output. Includes two additional folder:
-  - FPKM: Contains per sample FPKM counts, extracted from the stringtie
+- **stringtie**: Contains the stringtie output. Includes two additional folder:
+  - **FPKM**: Contains per sample FPKM counts, extracted from the stringtie
   abundance output. Also contains a file called `all_samples.FPKM`, which
   contains the FPKM values for all samples.
-  - TPM: Contains per sample TPM counts, extracted from the stringtie
+  - **TPM**: Contains per sample TPM counts, extracted from the stringtie
   abundance output. Also contains a file called `all_samples.TPM`, which
   contains the TPM values for all samples.
-- fragments_per_gene: Contains the HTSeq-Count output. Also contains a file
+- **fragments_per_gene**: Contains the HTSeq-Count output. Also contains a file
 called `all_samples.fragments_per_gene`, which contains the counts for all
 samples.
 
 ## About
-These workflows are part of [Biowdl](https://biowdl.github.io/)
+These workflows are part of [BioWDL](https://biowdl.github.io/)
 developed by [the SASC team](http://sasc.lumc.nl/).
 
 ## Contact
