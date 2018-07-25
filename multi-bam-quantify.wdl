@@ -1,15 +1,19 @@
+version 1.0
+
 import "tasks/mergecounts.wdl" as mergeCounts
 import "tasks/stringtie.wdl" as stringtie_task
 import "tasks/biopet.wdl" as biopet
 import "tasks/htseq.wdl" as htseq
 
 workflow MultiBamExpressionQuantification {
-    Array[Pair[String,Pair[File,File]]]+ bams #(sample, (bam, index))
-    #Map[String, Pair[File, File]] bams
-    String outputDir
-    String strandedness
-    File refGtf
-    File refRefflat
+    input {
+        Array[Pair[String,Pair[File,File]]]+ bams #(sample, (bam, index))
+        #Map[String, Pair[File, File]] bams
+        String outputDir
+        String strandedness
+        File refGtf
+        File refRefflat
+    }
 
     # call counters per sample
     scatter (sampleBam in bams) {
@@ -42,8 +46,9 @@ workflow MultiBamExpressionQuantification {
         Map[String, String] HTSeqStrandOptions = {"FR": "yes", "RF": "reverse", "None": "no"}
         call htseq.HTSeqCount as htSeqCount {
             input:
-                alignmentFiles = bamFile.left,
-                outputTable = outputDir + "/fragments_per_gene/" + sampleBam.left + ".fragments_per_gene",
+                alignmentFiles = [bamFile.left],
+                outputTable = outputDir + "/fragments_per_gene/" + sampleBam.left +
+                    ".fragments_per_gene",
                 stranded = HTSeqStrandOptions[strandedness],
                 gtfFile = refGtf
         }
@@ -88,8 +93,13 @@ workflow MultiBamExpressionQuantification {
 
     call mergeCounts.MergeCounts as mergedBaseCountsPerGene {
         input:
-            inputFiles = if strandedness == "FR" then baseCounter.geneSense else (
-                if strandedness == "RF" then baseCounter.geneAntisense else baseCounter.gene),
+            inputFiles = if strandedness == "FR"
+                then baseCounter.geneSense
+                else (
+                    if strandedness == "RF"
+                        then baseCounter.geneAntisense
+                        else baseCounter.gene
+                ),
             outputFile = outputDir + "/BaseCounter/all_samples.base.gene.counts",
             featureColumn = 1,
             valueColumn = 2,
@@ -106,13 +116,15 @@ workflow MultiBamExpressionQuantification {
 
 
 task FetchCounts {
-    File abundanceFile
-    String outputFile
-    Int column
+    input {
+        File abundanceFile
+        String outputFile
+        Int column
+    }
 
     command <<<
-        mkdir -p ${sub(outputFile, basename(outputFile) + "$", "")}
-        awk -F "\t" '{print $1 "\t" $${column}}' ${abundanceFile} > ${outputFile}
+        mkdir -p ~{sub(outputFile, basename(outputFile) + "$", "")}
+        awk -F "\t" '{print $1 "\t" $~{column}}' ~{abundanceFile} > ~{outputFile}
     >>>
 
     output {
