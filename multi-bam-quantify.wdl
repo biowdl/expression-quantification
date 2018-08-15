@@ -14,6 +14,10 @@ workflow MultiBamExpressionQuantification {
         File refGtf
         File refRefflat
     }
+    
+    String baseCounterDir = outputDir + "/BaseCounter/"
+    String strintieDir = outputDir + "/stringtie/"
+    String htSeqDir = outputDir + "/fragments_per_gene/" 
 
     # call counters per sample
     scatter (sampleBam in bams) {
@@ -22,8 +26,8 @@ workflow MultiBamExpressionQuantification {
         call stringtie_task.Stringtie as stringtie {
             input:
                 alignedReads = bamFile.left,
-                assembledTranscriptsFile = outputDir + "/stringtie/" + sampleBam.left + ".gff",
-                geneAbundanceFile = outputDir + "/stringtie/" + sampleBam.left + ".abundance",
+                assembledTranscriptsFile = strintieDir + sampleBam.left + ".gff",
+                geneAbundanceFile = strintieDir + sampleBam.left + ".abundance",
                 firstStranded = if strandedness == "FR" then true else false,
                 secondStranded = if strandedness == "RF" then true else false,
                 referenceGtf = refGtf
@@ -32,14 +36,14 @@ workflow MultiBamExpressionQuantification {
         call FetchCounts as fetchCountsStringtieTPM {
             input:
                 abundanceFile = select_first([stringtie.geneAbundance]),
-                outputFile = outputDir + "/stringtie/TPM/" + sampleBam.left + ".TPM",
+                outputFile = strintieDir + "/TPM/" + sampleBam.left + ".TPM",
                 column = 9
         }
 
         call FetchCounts as fetchCountsStringtieFPKM {
             input:
                 abundanceFile = select_first([stringtie.geneAbundance]),
-                outputFile = outputDir + "/stringtie/FPKM/" + sampleBam.left + ".FPKM",
+                outputFile = strintieDir + "/FPKM/" + sampleBam.left + ".FPKM",
                 column = 8
         }
 
@@ -47,8 +51,7 @@ workflow MultiBamExpressionQuantification {
         call htseq.HTSeqCount as htSeqCount {
             input:
                 alignmentFiles = [bamFile.left],
-                outputTable = outputDir + "/fragments_per_gene/" + sampleBam.left +
-                    ".fragments_per_gene",
+                outputTable = htSeqDir + sampleBam.left + ".fragments_per_gene",
                 stranded = HTSeqStrandOptions[strandedness],
                 gtfFile = refGtf
         }
@@ -57,7 +60,7 @@ workflow MultiBamExpressionQuantification {
             input:
                 bam = bamFile.left,
                 bamIndex = bamFile.right,
-                outputDir = outputDir + "/BaseCounter/",
+                outputDir = baseCounterDir,
                 prefix = sampleBam.left,
                 refFlat = refRefflat
         }
@@ -67,7 +70,7 @@ workflow MultiBamExpressionQuantification {
     call mergeCounts.MergeCounts as mergedStringtieTPMs {
         input:
             inputFiles = fetchCountsStringtieTPM.counts,
-            outputFile = outputDir + "/stringtie/TPM/all_samples.TPM",
+            outputFile = strintieDir + "/TPM/all_samples.TPM",
             featureColumn = 1,
             valueColumn = 2,
             inputHasHeader = true
@@ -76,7 +79,7 @@ workflow MultiBamExpressionQuantification {
     call mergeCounts.MergeCounts as mergedStringtieFPKMs {
         input:
             inputFiles = fetchCountsStringtieFPKM.counts,
-            outputFile = outputDir + "/stringtie/FPKM/all_samples.FPKM",
+            outputFile = strintieDir + "/FPKM/all_samples.FPKM",
             featureColumn = 1,
             valueColumn = 2,
             inputHasHeader = true
@@ -85,7 +88,7 @@ workflow MultiBamExpressionQuantification {
     call mergeCounts.MergeCounts as mergedHTSeqFragmentsPerGenes {
         input:
             inputFiles = htSeqCount.counts,
-            outputFile = outputDir + "/fragments_per_gene/all_samples.fragments_per_gene",
+            outputFile = htSeqDir + "/all_samples.fragments_per_gene",
             featureColumn = 1,
             valueColumn = 2,
             inputHasHeader = false
@@ -100,7 +103,7 @@ workflow MultiBamExpressionQuantification {
                         then baseCounter.geneAntisense
                         else baseCounter.gene
                 ),
-            outputFile = outputDir + "/BaseCounter/all_samples.base.gene.counts",
+            outputFile = baseCounterDir + "/all_samples.base.gene.counts",
             featureColumn = 1,
             valueColumn = 2,
             inputHasHeader = false
