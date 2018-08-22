@@ -70,9 +70,9 @@ trait ExpressionQuantification extends Pipeline with Annotation {
       Map(
         "MultiBamExpressionQuantification.outputDir" -> outputDir.getAbsolutePath,
         "MultiBamExpressionQuantification.strandedness" -> strandedness,
-        "MultiBamExpressionQuantification.refGtf" -> referenceGtf.map(
+        "MultiBamExpressionQuantification.gtfFile" -> referenceGtf.map(
           _.getAbsolutePath),
-        "MultiBamExpressionQuantification.refRefflat" -> referenceRefflat.map(
+        "MultiBamExpressionQuantification.refflatFile" -> referenceRefflat.map(
           _.getAbsolutePath),
         "MultiBamExpressionQuantification.bams" -> bamInput
       )
