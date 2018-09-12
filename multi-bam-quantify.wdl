@@ -2,12 +2,13 @@ version 1.0
 
 import "tasks/mergecounts.wdl" as mergeCounts
 import "tasks/stringtie.wdl" as stringtie_task
-import "tasks/biopet.wdl" as biopet
+import "tasks/biopet/biopet.wdl" as biopet
 import "tasks/htseq.wdl" as htseq
+import "tasks/common.wdl" as common
 
 workflow MultiBamExpressionQuantification {
     input {
-        Array[Pair[String,Pair[File,File]]]+ bams #(sample, (bam, index))
+        Array[Pair[String,IndexedBamFile]]+ bams #(sample, (bam, index))
         #Map[String, Pair[File, File]] bams
         String outputDir
         String strandedness
@@ -21,11 +22,11 @@ workflow MultiBamExpressionQuantification {
 
     # call counters per sample
     scatter (sampleBam in bams) {
-        Pair[File,File] bamFile = sampleBam.right
+        IndexedBamFile bamFile = sampleBam.right
 
         call stringtie_task.Stringtie as stringtie {
             input:
-                alignedReads = bamFile.left,
+                bamFile = bamFile,
                 assembledTranscriptsFile = strintieDir + sampleBam.left + ".gff",
                 geneAbundanceFile = strintieDir + sampleBam.left + ".abundance",
                 firstStranded = if strandedness == "FR" then true else false,
@@ -50,7 +51,8 @@ workflow MultiBamExpressionQuantification {
         Map[String, String] HTSeqStrandOptions = {"FR": "yes", "RF": "reverse", "None": "no"}
         call htseq.HTSeqCount as htSeqCount {
             input:
-                alignmentFiles = [bamFile.left],
+                inputBams = [bamFile.file],
+                inputBamsIndex = [bamFile.index],
                 outputTable = htSeqDir + sampleBam.left + ".fragments_per_gene",
                 stranded = HTSeqStrandOptions[strandedness],
                 gtfFile = gtfFile
@@ -58,8 +60,7 @@ workflow MultiBamExpressionQuantification {
 
         call biopet.BaseCounter as baseCounter {
             input:
-                bam = bamFile.left,
-                bamIndex = bamFile.right,
+                bam = bamFile,
                 outputDir = baseCounterDir,
                 prefix = sampleBam.left,
                 refFlat = refflatFile
