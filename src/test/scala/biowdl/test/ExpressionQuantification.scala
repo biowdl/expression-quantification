@@ -35,8 +35,8 @@ trait ExpressionQuantification extends Pipeline with Annotation {
     .map(sample => {
       val innerMap: Map[String, String] =
         Map(
-          "Left" -> bamFiles.get(sample).map(_.getAbsolutePath).getOrElse(""),
-          "Right" -> {
+          "file" -> bamFiles.get(sample).map(_.getAbsolutePath).getOrElse(""),
+          "index" -> {
             // Determine the samples index
             val index1 = new File(
               bamFiles
