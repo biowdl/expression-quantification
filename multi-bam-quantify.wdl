@@ -13,7 +13,7 @@ workflow MultiBamExpressionQuantification {
         String outputDir
         String strandedness
         File gtfFile
-        File refflatFile
+        #File refflatFile
     }
     
     #String baseCounterDir = outputDir + "/BaseCounter/"
