@@ -1,10 +1,10 @@
 version 1.0
 
+import "tasks/common.wdl" as common
+#import "tasks/biopet/biopet.wdl" as biopet
+import "tasks/htseq.wdl" as htseq
 import "tasks/mergecounts.wdl" as mergeCounts
 import "tasks/stringtie.wdl" as stringtie_task
-import "tasks/biopet/biopet.wdl" as biopet
-import "tasks/htseq.wdl" as htseq
-import "tasks/common.wdl" as common
 
 workflow MultiBamExpressionQuantification {
     input {
@@ -13,10 +13,10 @@ workflow MultiBamExpressionQuantification {
         String outputDir
         String strandedness
         File gtfFile
-        File refflatFile
+        #File refflatFile
     }
     
-    String baseCounterDir = outputDir + "/BaseCounter/"
+    #String baseCounterDir = outputDir + "/BaseCounter/"
     String strintieDir = outputDir + "/stringtie/"
     String htSeqDir = outputDir + "/fragments_per_gene/" 
 
@@ -58,13 +58,13 @@ workflow MultiBamExpressionQuantification {
                 gtfFile = gtfFile
         }
 
-        call biopet.BaseCounter as baseCounter {
-            input:
-                bam = bamFile,
-                outputDir = baseCounterDir,
-                prefix = sampleBam.left,
-                refFlat = refflatFile
-        }
+#        call biopet.BaseCounter as baseCounter {
+#            input:
+#                bam = bamFile,
+#                outputDir = baseCounterDir,
+#                prefix = sampleBam.left,
+#                refFlat = refflatFile
+#        }
     }
 
     # Merge count tables into one multisample count table per count type
@@ -95,23 +95,23 @@ workflow MultiBamExpressionQuantification {
             inputHasHeader = false
     }
 
-    call mergeCounts.MergeCounts as mergedBaseCountsPerGene {
-        input:
-            inputFiles = if strandedness == "FR"
-                then baseCounter.geneSense
-                else (
-                    if strandedness == "RF"
-                        then baseCounter.geneAntisense
-                        else baseCounter.gene
-                ),
-            outputFile = baseCounterDir + "/all_samples.base.gene.counts",
-            featureColumn = 1,
-            valueColumn = 2,
-            inputHasHeader = false
-    }
+#    call mergeCounts.MergeCounts as mergedBaseCountsPerGene {
+#        input:
+#            inputFiles = if strandedness == "FR"
+#                then baseCounter.geneSense
+#                else (
+#                    if strandedness == "RF"
+#                        then baseCounter.geneAntisense
+#                        else baseCounter.gene
+#                ),
+#            outputFile = baseCounterDir + "/all_samples.base.gene.counts",
+#            featureColumn = 1,
+#            valueColumn = 2,
+#            inputHasHeader = false
+#    }
 
     output {
-        File baseCountsPerGeneTable = mergedBaseCountsPerGene.mergedCounts
+        #File baseCountsPerGeneTable = mergedBaseCountsPerGene.mergedCounts
         File fragmentsPerGeneTable = mergedHTSeqFragmentsPerGenes.mergedCounts
         File FPKMTable = mergedStringtieFPKMs.mergedCounts
         File TPMTable = mergedStringtieTPMs.mergedCounts

@@ -32,9 +32,9 @@ trait ExpressionQuantificationSuccess
     addMustHaveFile("stringtie/FPKM/" + sample + ".FPKM")
     addMustHaveFile("fragments_per_gene/" + sample + ".fragments_per_gene")
   })
-  addMustHaveFile("BaseCounter")
+  //addMustHaveFile("BaseCounter")
   addMustHaveFile("stringtie/TPM/all_samples.TPM")
   addMustHaveFile("stringtie/FPKM/all_samples.FPKM")
   addMustHaveFile("fragments_per_gene/all_samples.fragments_per_gene")
-  addMustHaveFile("/BaseCounter/all_samples.base.gene.counts")
+  //addMustHaveFile("/BaseCounter/all_samples.base.gene.counts")
 }
