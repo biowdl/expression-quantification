@@ -12,7 +12,7 @@ workflow MultiBamExpressionQuantification {
         #Map[String, Pair[File, File]] bams
         String outputDir
         String strandedness
-        File gtfFile
+        File? referenceGtfFile
         #File refflatFile
     }
     
@@ -31,7 +31,7 @@ workflow MultiBamExpressionQuantification {
                 geneAbundanceFile = strintieDir + sampleBam.left + ".abundance",
                 firstStranded = if strandedness == "FR" then true else false,
                 secondStranded = if strandedness == "RF" then true else false,
-                referenceGtf = gtfFile
+                referenceGtf = referenceGtfFile
         }
 
         call FetchCounts as fetchCountsStringtieTPM {
@@ -55,7 +55,7 @@ workflow MultiBamExpressionQuantification {
                 inputBamsIndex = [bamFile.index],
                 outputTable = htSeqDir + sampleBam.left + ".fragments_per_gene",
                 stranded = HTSeqStrandOptions[strandedness],
-                gtfFile = gtfFile
+                gtfFile = referenceGtfFile
         }
 
 #        call biopet.BaseCounter as baseCounter {
@@ -115,6 +115,7 @@ workflow MultiBamExpressionQuantification {
         File fragmentsPerGeneTable = mergedHTSeqFragmentsPerGenes.mergedCounts
         File FPKMTable = mergedStringtieFPKMs.mergedCounts
         File TPMTable = mergedStringtieTPMs.mergedCounts
+        Array[File] gffFiles = stringtie.assembledTranscriptsFile
     }
 }
 
