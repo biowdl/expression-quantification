@@ -34,6 +34,15 @@ trait ExpressionQuantificationTest
         "sample2" -> fixtureFile("samples", "rna3", "rna3.bam"))
 }
 
-class ExpressionQuantificationSuccessTest
+class ExpressionQuantificationSuccessGuidedTest
+    extends ExpressionQuantificationTest
+    with ExpressionQuantificationSuccess {
+  super.inputs ++ Map(
+    "MultiBamExpressionQuantification.referenceGtfFile" -> referenceGtf.map(
+      _.getAbsolutePath)
+  )
+}
+
+class ExpressionQuantificationSuccessUnguidedTest
     extends ExpressionQuantificationTest
     with ExpressionQuantificationSuccess
