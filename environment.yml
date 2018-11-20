@@ -1,4 +1,4 @@
-name: expression-quanitify
+name: expression-quantify
 channels:
   - bioconda
   - conda-forge
