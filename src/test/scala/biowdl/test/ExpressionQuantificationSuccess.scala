@@ -27,7 +27,7 @@ trait ExpressionQuantificationSuccess
     extends ExpressionQuantification
     with PipelineSuccess {
   bamFiles.keys.foreach(sample => {
-    addMustHaveFile("stringtie/" + sample + ".gff")
+    addMustHaveFile("stringtie/" + sample + ".gtf")
     addMustHaveFile("stringtie/TPM/" + sample + ".TPM")
     addMustHaveFile("stringtie/FPKM/" + sample + ".FPKM")
     addMustHaveFile("fragments_per_gene/" + sample + ".fragments_per_gene")
