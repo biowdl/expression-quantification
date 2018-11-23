@@ -7,6 +7,7 @@ biopetUrlName := "expression-quantification"
 startYear := Some(2018)
 
 biopetIsTool := false
+biopetIsPipeline := true
 
 concurrentRestrictions := Seq(
   Tags.limitAll(
