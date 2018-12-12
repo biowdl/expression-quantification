@@ -29,6 +29,7 @@ import nl.biopet.utils.biowdl.annotations.Annotation
 trait ExpressionQuantification extends Pipeline with Annotation {
 
   def strandedness: String = "None"
+  def guided: Boolean = true
 
   def bamFiles: Map[String, File]
   val bamInput: List[Map[String, Any]] = bamFiles.keys
@@ -73,7 +74,13 @@ trait ExpressionQuantification extends Pipeline with Annotation {
         //"MultiBamExpressionQuantification.refflatFile" -> referenceRefflat.map(
         //  _.getAbsolutePath),
         "MultiBamExpressionQuantification.bams" -> bamInput
-      )
+      ) ++ {
+      if (guided)
+        Map(
+          "MultiBamExpressionQuantification.referenceGtfFile" -> referenceGtf
+            .map(_.getAbsolutePath))
+      else Map()
+    }
 
   def startFile: File = new File("./multi-bam-quantify.wdl")
 }
