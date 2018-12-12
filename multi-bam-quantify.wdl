@@ -26,8 +26,8 @@ workflow MultiBamExpressionQuantification {
                 bamFile = bamFile,
                 assembledTranscriptsFile = stringtieDir + sampleId + ".gtf",
                 geneAbundanceFile = stringtieDir + sampleId + ".abundance",
-                firstStranded = if strandedness == "FR" then true else false,
-                secondStranded = if strandedness == "RF" then true else false,
+                firstStranded = if strandedness == "RF" then true else false,
+                secondStranded = if strandedness == "FR" then true else false,
                 referenceGtf = referenceGtfFile
         }
 
