@@ -30,6 +30,7 @@ trait ExpressionQuantification extends Pipeline with Annotation {
 
   def strandedness: String = "None"
   def guided: Boolean = true
+  def detectNovel: Option[Boolean] = None
 
   def bamFiles: Map[String, File]
   val bamInput: List[Map[String, Any]] = bamFiles.keys
@@ -80,7 +81,8 @@ trait ExpressionQuantification extends Pipeline with Annotation {
           "MultiBamExpressionQuantification.referenceGtfFile" -> referenceGtf
             .map(_.getAbsolutePath))
       else Map()
-    }
+    } ++ detectNovel.map(
+      "MultiBamExpressionQuantification.detectNovelTranscripts" -> _)
 
   def startFile: File = new File("./multi-bam-quantify.wdl")
 }

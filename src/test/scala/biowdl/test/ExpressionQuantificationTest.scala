@@ -38,6 +38,12 @@ class ExpressionQuantificationSuccessGuidedTest
     extends ExpressionQuantificationTest
     with ExpressionQuantificationSuccess
 
+class ExpressionQuantificationSuccessGuidedWithNovelTest
+    extends ExpressionQuantificationTest
+    with ExpressionQuantificationSuccess {
+  override def detectNovel: Option[Boolean] = Some(true)
+}
+
 class ExpressionQuantificationSuccessUnguidedTest
     extends ExpressionQuantificationTest
     with ExpressionQuantificationSuccess {
