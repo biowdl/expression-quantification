@@ -36,13 +36,16 @@ trait ExpressionQuantificationTest
 
 class ExpressionQuantificationSuccessGuidedTest
     extends ExpressionQuantificationTest
+    with ExpressionQuantificationSuccess
+
+class ExpressionQuantificationSuccessGuidedWithNovelTest
+    extends ExpressionQuantificationTest
     with ExpressionQuantificationSuccess {
-  super.inputs ++ Map(
-    "MultiBamExpressionQuantification.referenceGtfFile" -> referenceGtf.map(
-      _.getAbsolutePath)
-  )
+  override def detectNovel: Option[Boolean] = Some(true)
 }
 
 class ExpressionQuantificationSuccessUnguidedTest
     extends ExpressionQuantificationTest
-    with ExpressionQuantificationSuccess
+    with ExpressionQuantificationSuccess {
+  override def guided: Boolean = false
+}
