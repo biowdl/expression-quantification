@@ -1,9 +1,8 @@
 name: expression-quantify
 channels:
-  - bioconda
   - conda-forge
+  - bioconda
   - defaults
-  - r
 dependencies:
   - stringtie==1.3.4
   - htseq==0.9.1
