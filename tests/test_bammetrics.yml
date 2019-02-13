@@ -1,0 +1,23 @@
+- name: guided
+  tags:
+    - integration
+  command: >-
+    bash -c '
+    TEST_JSON=tests/integration/guided.json ;
+    sed -i "2i\"QC.outputDir\":\"$PWD/test-output\"," $TEST_JSON ;
+    cromwell run -i $TEST_JSON multi-bam-quantify.wdl'
+  stdout:
+    contains:
+      - "WorkflowSucceededState"
+
+- name: unguided
+  tags:
+    - integration
+  command: >-
+    bash -c '
+    TEST_JSON=tests/integration/unguided.json ;
+    sed -i "2i\"QC.outputDir\":\"$PWD/test-output\"," $TEST_JSON ;
+    cromwell run -i $TEST_JSON multi-bam-quantify.wdl'
+  stdout:
+    contains:
+      - "WorkflowSucceededState"
