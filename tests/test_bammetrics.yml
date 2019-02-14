@@ -22,6 +22,30 @@
     - path: "test-output/stringtie/FPKM/all_samples.FPKM"
     - path: "test-output/fragments_per_gene/all_samples.fragments_per_gene"
 
+- name: guided_with_novel
+  tags:
+    - integration
+  command: >-
+    bash -c '
+    TEST_JSON=tests/integration/guided_with_novel.json ;
+    sed -i "2i\"MultiBamExpressionQuantification.outputDir\":\"$PWD/test-output\"," $TEST_JSON ;
+    cromwell run -i $TEST_JSON multi-bam-quantify.wdl'
+  stdout:
+    contains:
+      - "WorkflowSucceededState"
+  files:
+    - path: "test-output/stringtie/sample1.gtf"
+    - path: "test-output/stringtie/TPM/sample1.TPM"
+    - path: "test-output/stringtie/FPKM/sample1.FPKM"
+    - path: "test-output/fragments_per_gene/sample1.fragments_per_gene"
+    - path: "test-output/stringtie/sample2.gtf"
+    - path: "test-output/stringtie/TPM/sample2.TPM"
+    - path: "test-output/stringtie/FPKM/sample2.FPKM"
+    - path: "test-output/fragments_per_gene/sample2.fragments_per_gene"
+    - path: "test-output/stringtie/TPM/all_samples.TPM"
+    - path: "test-output/stringtie/FPKM/all_samples.FPKM"
+    - path: "test-output/fragments_per_gene/all_samples.fragments_per_gene"
+
 - name: unguided
   tags:
     - integration
