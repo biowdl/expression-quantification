@@ -1,6 +1,7 @@
 {
   "MultiBamExpressionQuantification.strandedness": "None",
   "MultiBamExpressionQuantification.referenceGtfFile": "tests/data/reference.gtf",
+  "MultiBamExpressionQuantification.detectNovelTranscripts": true,
   "MultiBamExpressionQuantification.bams": [
     {
       "left": "sample1",
