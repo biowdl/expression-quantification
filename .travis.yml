@@ -35,6 +35,7 @@ matrix:
   include:
     - env: TEST=guided
     - env: TEST=unguided
+    - env: TEST=guided_with_novel
     # Below is for testing if all files are valid and if all submodules are up to date.
     - env: TEST=Womtool validate and submodule up to date
       install:
