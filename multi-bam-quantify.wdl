@@ -11,6 +11,7 @@ workflow MultiBamExpressionQuantification {
         String outputDir
         String strandedness
         File? referenceGtfFile # Not providing the reference gtf will have stringtie do an unguided assembly
+        #HOTFIX NOTE: The method used here does not preoperly handle unguided assemblies, don't use it!
     }
 
     String stringtieDir = outputDir + "/stringtie/"
@@ -26,8 +27,9 @@ workflow MultiBamExpressionQuantification {
                 bamFile = bamFile,
                 assembledTranscriptsFile = stringtieDir + sampleId + ".gtf",
                 geneAbundanceFile = stringtieDir + sampleId + ".abundance",
-                firstStranded = if strandedness == "FR" then true else false,
-                secondStranded = if strandedness == "RF" then true else false,
+                skipNovelTranscripts = defined(referenceGtfFile),
+                firstStranded = if strandedness == "RF" then true else false,
+                secondStranded = if strandedness == "FR" then true else false,
                 referenceGtf = referenceGtfFile
         }
 

@@ -65,6 +65,8 @@ trait ExpressionQuantification extends Pipeline with Annotation {
     })
     .toList
 
+  def referenceMap: Map[String, Any] = Map()
+
   override def inputs: Map[String, Any] =
     super.inputs ++
       Map(
@@ -73,7 +75,7 @@ trait ExpressionQuantification extends Pipeline with Annotation {
         //"MultiBamExpressionQuantification.refflatFile" -> referenceRefflat.map(
         //  _.getAbsolutePath),
         "MultiBamExpressionQuantification.bams" -> bamInput
-      )
+      ) ++ referenceMap
 
   def startFile: File = new File("./multi-bam-quantify.wdl")
 }

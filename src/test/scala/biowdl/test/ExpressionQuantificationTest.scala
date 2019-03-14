@@ -37,7 +37,7 @@ trait ExpressionQuantificationTest
 class ExpressionQuantificationSuccessGuidedTest
     extends ExpressionQuantificationTest
     with ExpressionQuantificationSuccess {
-  super.inputs ++ Map(
+  override def referenceMap: Map[String, Any] = Map(
     "MultiBamExpressionQuantification.referenceGtfFile" -> referenceGtf.map(
       _.getAbsolutePath)
   )
