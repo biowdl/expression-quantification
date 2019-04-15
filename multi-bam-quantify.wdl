@@ -92,7 +92,8 @@ workflow MultiBamExpressionQuantification {
             sampleNames = sampleId,
             header = true,
             additionalAttributes = additionalAttributes,
-            referenceGtf = select_first([mergeStringtieGtf.mergedGtfFile, referenceGtfFile])
+            referenceGtf = select_first([mergeStringtieGtf.mergedGtfFile, referenceGtfFile]),
+            dockerTag = dockerTags["collect-columns"]
     }
 
     call collectColumns.CollectColumns as mergedStringtieFPKMs {
@@ -103,7 +104,8 @@ workflow MultiBamExpressionQuantification {
             sampleNames = sampleId,
             header = true,
             additionalAttributes = additionalAttributes,
-            referenceGtf = select_first([mergeStringtieGtf.mergedGtfFile, referenceGtfFile])
+            referenceGtf = select_first([mergeStringtieGtf.mergedGtfFile, referenceGtfFile]),
+            dockerTag = dockerTags["collect-columns"]
     }
 
     call collectColumns.CollectColumns as mergedHTSeqFragmentsPerGenes {
@@ -112,7 +114,8 @@ workflow MultiBamExpressionQuantification {
             outputPath = htSeqDir + "/all_samples.fragments_per_gene",
             sampleNames = sampleId,
             additionalAttributes = additionalAttributes,
-            referenceGtf = select_first([mergeStringtieGtf.mergedGtfFile, referenceGtfFile])
+            referenceGtf = select_first([mergeStringtieGtf.mergedGtfFile, referenceGtfFile]),
+            dockerTag = dockerTags["collect-columns"]
     }
 
     output {
