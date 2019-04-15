@@ -88,7 +88,7 @@ workflow MultiBamExpressionQuantification {
         input:
             inputTables = select_all(stringtie.geneAbundance),
             outputPath = stringtieDir + "/all_samples.TPM",
-            valueColumn = 9,
+            valueColumn = 8,
             sampleNames = sampleId,
             header = true,
             additionalAttributes = additionalAttributes,
@@ -100,7 +100,7 @@ workflow MultiBamExpressionQuantification {
         input:
             inputTables = select_all(stringtie.geneAbundance),
             outputPath = stringtieDir + "/all_samples.FPKM",
-            valueColumn = 8,
+            valueColumn = 7,
             sampleNames = sampleId,
             header = true,
             additionalAttributes = additionalAttributes,
