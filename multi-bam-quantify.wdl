@@ -110,7 +110,7 @@ workflow MultiBamExpressionQuantification {
 
     call collectColumns.CollectColumns as mergedHTSeqFragmentsPerGenes {
         input:
-            inputTables = select_all(stringtie.geneAbundance),
+            inputTables = htSeqCount.counts,
             outputPath = htSeqDir + "/all_samples.fragments_per_gene",
             sampleNames = sampleId,
             additionalAttributes = additionalAttributes,
