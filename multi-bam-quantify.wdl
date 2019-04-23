@@ -1,8 +1,8 @@
 version 1.0
 
+import "tasks/collect-columns.wdl" as collectColumns
 import "tasks/common.wdl" as common
 import "tasks/htseq.wdl" as htseq
-import "tasks/mergecounts.wdl" as mergeCounts
 import "tasks/stringtie.wdl" as stringtie_task
 
 workflow MultiBamExpressionQuantification {
@@ -14,8 +14,11 @@ workflow MultiBamExpressionQuantification {
         Boolean detectNovelTranscripts = if defined(referenceGtfFile) then false else true
         Array[String]+? additionalAttributes
 
-        Map[String, String] dockerTags = {"htseq": "0.9.1--py36h7eb728f_2",
-            "stringtie": "1.3.4--py35_0"}
+        Map[String, String] dockerTags = {
+            "htseq": "0.9.1--py36h7eb728f_2",
+            "stringtie": "1.3.4--py35_0",
+            "collect-columns":"0.1.1--py_0"
+        }
     }
 
     String stringtieDir = outputDir + "/stringtie/"
@@ -67,20 +70,6 @@ workflow MultiBamExpressionQuantification {
                 dockerTag = dockerTags["stringtie"]
         }
 
-        call FetchCounts as fetchCountsStringtieTPM {
-            input:
-                abundanceFile = select_first([stringtie.geneAbundance]),
-                outputFile = stringtieDir + "/TPM/" + sampleId + ".TPM",
-                column = 9
-        }
-
-        call FetchCounts as fetchCountsStringtieFPKM {
-            input:
-                abundanceFile = select_first([stringtie.geneAbundance]),
-                outputFile = stringtieDir + "/FPKM/" + sampleId + ".FPKM",
-                column = 8
-        }
-
         Map[String, String] HTSeqStrandOptions = {"FR": "yes", "RF": "reverse", "None": "no"}
         call htseq.HTSeqCount as htSeqCount {
             input:
@@ -95,66 +84,49 @@ workflow MultiBamExpressionQuantification {
     }
 
     # Merge count tables into one multisample count table per count type
-    call mergeCounts.MergeCounts as mergedStringtieTPMs {
+    call collectColumns.CollectColumns as mergedStringtieTPMs {
         input:
-            inputFiles = fetchCountsStringtieTPM.counts,
-            outputFile = stringtieDir + "/TPM/all_samples.TPM",
-            featureColumn = 1,
-            valueColumn = 2,
-            inputHasHeader = true,
+            inputTables = select_all(stringtie.geneAbundance),
+            outputPath = stringtieDir + "/all_samples.TPM",
+            valueColumn = 8,
+            sampleNames = sampleId,
+            header = true,
+            additionalAttributes = additionalAttributes,
             referenceGtf = select_first([mergeStringtieGtf.mergedGtfFile, referenceGtfFile]),
-            additionalAttributes = additionalAttributes
+            dockerTag = dockerTags["collect-columns"]
     }
 
-    call mergeCounts.MergeCounts as mergedStringtieFPKMs {
+    call collectColumns.CollectColumns as mergedStringtieFPKMs {
         input:
-            inputFiles = fetchCountsStringtieFPKM.counts,
-            outputFile = stringtieDir + "/FPKM/all_samples.FPKM",
-            featureColumn = 1,
-            valueColumn = 2,
-            inputHasHeader = true,
+            inputTables = select_all(stringtie.geneAbundance),
+            outputPath = stringtieDir + "/all_samples.FPKM",
+            valueColumn = 7,
+            sampleNames = sampleId,
+            header = true,
+            additionalAttributes = additionalAttributes,
             referenceGtf = select_first([mergeStringtieGtf.mergedGtfFile, referenceGtfFile]),
-            additionalAttributes = additionalAttributes
-        }
+            dockerTag = dockerTags["collect-columns"]
+    }
 
-    call mergeCounts.MergeCounts as mergedHTSeqFragmentsPerGenes {
+    call collectColumns.CollectColumns as mergedHTSeqFragmentsPerGenes {
         input:
-            inputFiles = htSeqCount.counts,
-            outputFile = htSeqDir + "/all_samples.fragments_per_gene",
-            featureColumn = 1,
-            valueColumn = 2,
-            inputHasHeader = false,
+            inputTables = htSeqCount.counts,
+            outputPath = htSeqDir + "/all_samples.fragments_per_gene",
+            sampleNames = sampleId,
+            additionalAttributes = additionalAttributes,
             referenceGtf = select_first([mergeStringtieGtf.mergedGtfFile, referenceGtfFile]),
-            additionalAttributes = additionalAttributes
+            dockerTag = dockerTags["collect-columns"]
     }
 
     output {
-        File fragmentsPerGeneTable = mergedHTSeqFragmentsPerGenes.mergedCounts
-        File FPKMTable = mergedStringtieFPKMs.mergedCounts
-        File TPMTable = mergedStringtieTPMs.mergedCounts
+        File fragmentsPerGeneTable = mergedHTSeqFragmentsPerGenes.outputTable
+        File FPKMTable = mergedStringtieFPKMs.outputTable
+        File TPMTable = mergedStringtieTPMs.outputTable
 
         Array[Pair[String, File]] sampleGtfFiles = if detectNovelTranscripts
             then zip(select_first([sampleIdAssembly]),
                 select_first([stringtieAssembly.assembledTranscripts]))
             else []
         File? mergedGtfFile = mergeStringtieGtf.mergedGtfFile
-    }
-}
-
-
-task FetchCounts {
-    input {
-        File abundanceFile
-        String outputFile
-        Int column
-    }
-
-    command <<<
-        mkdir -p ~{sub(outputFile, basename(outputFile) + "$", "")}
-        awk -F "\t" '{print $1 "\t" $~{column}}' ~{abundanceFile} > ~{outputFile}
-    >>>
-
-    output {
-        File counts = outputFile
     }
 }
