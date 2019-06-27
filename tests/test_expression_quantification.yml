@@ -2,10 +2,8 @@
   tags:
     - integration
   command: >-
-    bash -c '
-    TEST_JSON=tests/integration/guided.json ;
-    sed -i "2i\"MultiBamExpressionQuantification.outputDir\":\"$PWD/test-output\"," $TEST_JSON ;
-    cromwell run -i $TEST_JSON multi-bam-quantify.wdl'
+    cromwell run -o tests/cromwell_options.json
+    -i tests/integration/guided.json multi-bam-quantify.wdl
   stdout:
     contains:
       - "WorkflowSucceededState"
@@ -22,10 +20,8 @@
   tags:
     - integration
   command: >-
-    bash -c '
-    TEST_JSON=tests/integration/guided_with_novel.json ;
-    sed -i "2i\"MultiBamExpressionQuantification.outputDir\":\"$PWD/test-output\"," $TEST_JSON ;
-    cromwell run -i $TEST_JSON multi-bam-quantify.wdl'
+    cromwell run -o tests/cromwell_options.json
+    -i tests/integration/guided_with_novel.json multi-bam-quantify.wdl
   stdout:
     contains:
       - "WorkflowSucceededState"
@@ -42,10 +38,8 @@
   tags:
     - integration
   command: >-
-    bash -c '
-    TEST_JSON=tests/integration/guided_with_novel_additional_attributes.json ;
-    sed -i "2i\"MultiBamExpressionQuantification.outputDir\":\"$PWD/test-output\"," $TEST_JSON ;
-    cromwell run -i $TEST_JSON multi-bam-quantify.wdl'
+    cromwell run -o tests/cromwell_options.json
+    -i tests/integration/guided_with_novel_additional_attributes.json multi-bam-quantify.wdl
   stdout:
     contains:
       - "WorkflowSucceededState"
@@ -64,10 +58,8 @@
   tags:
     - integration
   command: >-
-    bash -c '
-    TEST_JSON=tests/integration/unguided.json ;
-    sed -i "2i\"MultiBamExpressionQuantification.outputDir\":\"$PWD/test-output\"," $TEST_JSON ;
-    cromwell run -i $TEST_JSON multi-bam-quantify.wdl'
+    cromwell run -o tests/cromwell_options.json
+    -i tests/integration/unguided.json multi-bam-quantify.wdl   bash -c '
   stdout:
     contains:
       - "WorkflowSucceededState"

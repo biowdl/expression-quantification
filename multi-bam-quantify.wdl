@@ -8,7 +8,7 @@ import "tasks/stringtie.wdl" as stringtie_task
 workflow MultiBamExpressionQuantification {
     input {
         Array[Pair[String,IndexedBamFile]]+ bams #(sample, (bam, index))
-        String outputDir
+        String outputDir = "."
         String strandedness
         File? referenceGtfFile # Not providing the reference gtf will have stringtie do an unguided assembly
         Boolean detectNovelTranscripts = if defined(referenceGtfFile) then false else true
