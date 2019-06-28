@@ -59,7 +59,7 @@
     - integration
   command: >-
     cromwell run -o tests/cromwell_options.json
-    -i tests/integration/unguided.json multi-bam-quantify.wdl   bash -c '
+    -i tests/integration/unguided.json multi-bam-quantify.wdl
   stdout:
     contains:
       - "WorkflowSucceededState"
