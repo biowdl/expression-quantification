@@ -8,9 +8,7 @@
     contains:
       - "WorkflowSucceededState"
   files:
-    - path: "test-output/stringtie/sample1.gtf"
     - path: "test-output/fragments_per_gene/sample1.fragments_per_gene"
-    - path: "test-output/stringtie/sample2.gtf"
     - path: "test-output/fragments_per_gene/sample2.fragments_per_gene"
     - path: "test-output/stringtie/all_samples.TPM"
     - path: "test-output/stringtie/all_samples.FPKM"
@@ -26,9 +24,9 @@
     contains:
       - "WorkflowSucceededState"
   files:
-    - path: "test-output/stringtie/sample1.gtf"
+    - path: "test-output/stringtie/assembly/sample1.gtf"
     - path: "test-output/fragments_per_gene/sample1.fragments_per_gene"
-    - path: "test-output/stringtie/sample2.gtf"
+    - path: "test-output/stringtie/assembly/sample2.gtf"
     - path: "test-output/fragments_per_gene/sample2.fragments_per_gene"
     - path: "test-output/stringtie/all_samples.TPM"
     - path: "test-output/stringtie/all_samples.FPKM"
@@ -44,9 +42,9 @@
     contains:
       - "WorkflowSucceededState"
   files:
-    - path: "test-output/stringtie/sample1.gtf"
+    - path: "test-output/stringtie/assembly/sample1.gtf"
     - path: "test-output/fragments_per_gene/sample1.fragments_per_gene"
-    - path: "test-output/stringtie/sample2.gtf"
+    - path: "test-output/stringtie/assembly/sample2.gtf"
     - path: "test-output/fragments_per_gene/sample2.fragments_per_gene"
     - path: "test-output/stringtie/all_samples.TPM"
     - path: "test-output/stringtie/all_samples.FPKM"
@@ -64,9 +62,9 @@
     contains:
       - "WorkflowSucceededState"
   files:
-    - path: "test-output/stringtie/sample1.gtf"
+    - path: "test-output/stringtie/assembly/sample1.gtf"
     - path: "test-output/fragments_per_gene/sample1.fragments_per_gene"
-    - path: "test-output/stringtie/sample2.gtf"
+    - path: "test-output/stringtie/assembly/sample2.gtf"
     - path: "test-output/fragments_per_gene/sample2.fragments_per_gene"
     - path: "test-output/stringtie/all_samples.TPM"
     - path: "test-output/stringtie/all_samples.FPKM"

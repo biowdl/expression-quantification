@@ -122,6 +122,7 @@ workflow MultiBamExpressionQuantification {
 
     output {
         File fragmentsPerGeneTable = mergedHTSeqFragmentsPerGenes.outputTable
+        Array[File] sampleFragmentsPerGeneTables = htSeqCount.counts
         File FPKMTable = mergedStringtieFPKMs.outputTable
         File TPMTable = mergedStringtieTPMs.outputTable
 
