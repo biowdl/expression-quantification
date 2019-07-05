@@ -2,17 +2,13 @@
   tags:
     - integration
   command: >-
-    bash -c '
-    TEST_JSON=tests/integration/guided.json ;
-    sed -i "2i\"MultiBamExpressionQuantification.outputDir\":\"$PWD/test-output\"," $TEST_JSON ;
-    cromwell run -i $TEST_JSON multi-bam-quantify.wdl'
+    cromwell run -o tests/cromwell_options.json
+    -i tests/integration/guided.json multi-bam-quantify.wdl
   stdout:
     contains:
       - "WorkflowSucceededState"
   files:
-    - path: "test-output/stringtie/sample1.gtf"
     - path: "test-output/fragments_per_gene/sample1.fragments_per_gene"
-    - path: "test-output/stringtie/sample2.gtf"
     - path: "test-output/fragments_per_gene/sample2.fragments_per_gene"
     - path: "test-output/stringtie/all_samples.TPM"
     - path: "test-output/stringtie/all_samples.FPKM"
@@ -22,17 +18,15 @@
   tags:
     - integration
   command: >-
-    bash -c '
-    TEST_JSON=tests/integration/guided_with_novel.json ;
-    sed -i "2i\"MultiBamExpressionQuantification.outputDir\":\"$PWD/test-output\"," $TEST_JSON ;
-    cromwell run -i $TEST_JSON multi-bam-quantify.wdl'
+    cromwell run -o tests/cromwell_options.json
+    -i tests/integration/guided_with_novel.json multi-bam-quantify.wdl
   stdout:
     contains:
       - "WorkflowSucceededState"
   files:
-    - path: "test-output/stringtie/sample1.gtf"
+    - path: "test-output/stringtie/assembly/sample1.gtf"
     - path: "test-output/fragments_per_gene/sample1.fragments_per_gene"
-    - path: "test-output/stringtie/sample2.gtf"
+    - path: "test-output/stringtie/assembly/sample2.gtf"
     - path: "test-output/fragments_per_gene/sample2.fragments_per_gene"
     - path: "test-output/stringtie/all_samples.TPM"
     - path: "test-output/stringtie/all_samples.FPKM"
@@ -42,17 +36,15 @@
   tags:
     - integration
   command: >-
-    bash -c '
-    TEST_JSON=tests/integration/guided_with_novel_additional_attributes.json ;
-    sed -i "2i\"MultiBamExpressionQuantification.outputDir\":\"$PWD/test-output\"," $TEST_JSON ;
-    cromwell run -i $TEST_JSON multi-bam-quantify.wdl'
+    cromwell run -o tests/cromwell_options.json
+    -i tests/integration/guided_with_novel_additional_attributes.json multi-bam-quantify.wdl
   stdout:
     contains:
       - "WorkflowSucceededState"
   files:
-    - path: "test-output/stringtie/sample1.gtf"
+    - path: "test-output/stringtie/assembly/sample1.gtf"
     - path: "test-output/fragments_per_gene/sample1.fragments_per_gene"
-    - path: "test-output/stringtie/sample2.gtf"
+    - path: "test-output/stringtie/assembly/sample2.gtf"
     - path: "test-output/fragments_per_gene/sample2.fragments_per_gene"
     - path: "test-output/stringtie/all_samples.TPM"
     - path: "test-output/stringtie/all_samples.FPKM"
@@ -64,17 +56,15 @@
   tags:
     - integration
   command: >-
-    bash -c '
-    TEST_JSON=tests/integration/unguided.json ;
-    sed -i "2i\"MultiBamExpressionQuantification.outputDir\":\"$PWD/test-output\"," $TEST_JSON ;
-    cromwell run -i $TEST_JSON multi-bam-quantify.wdl'
+    cromwell run -o tests/cromwell_options.json
+    -i tests/integration/unguided.json multi-bam-quantify.wdl
   stdout:
     contains:
       - "WorkflowSucceededState"
   files:
-    - path: "test-output/stringtie/sample1.gtf"
+    - path: "test-output/stringtie/assembly/sample1.gtf"
     - path: "test-output/fragments_per_gene/sample1.fragments_per_gene"
-    - path: "test-output/stringtie/sample2.gtf"
+    - path: "test-output/stringtie/assembly/sample2.gtf"
     - path: "test-output/fragments_per_gene/sample2.fragments_per_gene"
     - path: "test-output/stringtie/all_samples.TPM"
     - path: "test-output/stringtie/all_samples.FPKM"
