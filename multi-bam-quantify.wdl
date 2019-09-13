@@ -62,7 +62,6 @@ workflow MultiBamExpressionQuantification {
         call stringtie_task.Stringtie as stringtie {
             input:
                 bam = bamFile.file,
-                bamIndex = bamFile.index,
                 assembledTranscriptsFile = stringtieDir + sampleId + ".gtf",
                 geneAbundanceFile = stringtieDir + sampleId + ".abundance",
                 firstStranded = if strandedness == "RF" then true else false,
