@@ -1,8 +1,6 @@
 ---
 layout: default
 title: Home
-version: develop
-latest: false
 ---
 
 This workflow can be used to perform expression quantification for multiple
@@ -28,8 +26,6 @@ Inputs are provided through a JSON file. The minimally required inputs are
 described below and a template containing all possible inputs can be generated
 using Womtool as described in the
 [WOMtool documentation](http://cromwell.readthedocs.io/en/stable/WOMtool/).
-See [this page](/inputs.html) for some additional general notes and information
-about pipeline inputs.
 
 ```json
 {
@@ -47,8 +43,8 @@ items should be an object containing a `"Left"` element (the sample id) and a
 here:
 ```json
 {
-  "Left": "Sample identifier",
-  "Right": {
+  "left": "Sample identifier",
+  "right": {
     "file": "The path to the sample's BAM file",
     "index": "The path to the index for the sample's BAM file"
   }
@@ -60,14 +56,14 @@ here:
 {
   "MultiBamExpressionQuantification.bams": [
     {
-      "Left": "s1",
-      "Right": {
+      "left": "s1",
+      "right": {
         "file": "/home/user/mapping/results/s1.bam",
         "index": "/home/user/mapping/results/s1.bai"
       }
     }, {
-      "Left": "s2",
-      "Right": {
+      "left": "s2",
+      "right": {
         "file": "/home/user/mapping/results/s2.bam",
         "index": "/home/user/mapping/results/s2.bai"
       }
@@ -79,20 +75,24 @@ here:
 }
 ```
 
-### Tool versions
-Included in the repository is an `environment.yml` file. This file includes
-all the tool version on which the workflow was tested. You can use conda and
-this file to create an environment with all the correct tools.
+## Dependency requirements and tool versions
+Biowdl pipelines use docker images to ensure  reproducibility. This
+means that biowdl pipelines will run on any system that has docker
+installed. Alternatively they can be run with singularity.
+
+For more advanced configuration of docker or singularity please check
+the [cromwell documentation on containers](
+https://cromwell.readthedocs.io/en/stable/tutorials/Containers/).
+
+Images from [biocontainers](https://biocontainers.pro) are preferred for
+biowdl pipelines. The list of default images for this pipeline can be
+found in the default for the `dockerImages` input.
 
 ### Output
 The `multi-bam-quantify` workflow produces two directories:
-- **stringtie**: Contains the Stringtie output. Includes two additional folder:
-  - **FPKM**: Contains per sample FPKM counts, extracted from the Stringtie
-    abundance output. Also contains a file called `all_samples.FPKM`, which
-    contains the FPKM values for all samples.
-  - **TPM**: Contains per sample TPM counts, extracted from the Stringtie
-    abundance output. Also contains a file called `all_samples.TPM`, which
-    contains the TPM values for all samples.
+- **stringtie**: Contains the Stringtie output. Includes two additional files:
+  `all_samples.FPKM` and `all_samples.TPM`, which contain the FPKM and TPM values
+   for all samples.
 - **fragments_per_gene**: Contains the HTSeq-Count output. Also contains a file
   called `all_samples.fragments_per_gene`, which contains the counts for all
   samples.
