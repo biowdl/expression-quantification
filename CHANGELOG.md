@@ -11,6 +11,7 @@ that users understand how the changes affect the new version.
 
 version 1.2.0-dev
 -----------------
++ Updated default htseq image to version 0.11.2
 + Add miniwdl to linting.
 
 version 1.1.0
