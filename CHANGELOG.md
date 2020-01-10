@@ -13,6 +13,7 @@ version 1.2.0-dev
 -----------------
 + Added inputs overview to the docs.
 + Added parameter_meta.
++ Added wdl-aid to linting.
 + Updated default htseq image to version 0.11.2
 + Add miniwdl to linting.
 
