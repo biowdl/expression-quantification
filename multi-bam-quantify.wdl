@@ -19,6 +19,7 @@ workflow MultiBamExpressionQuantification {
             "htseq": "quay.io/biocontainers/htseq:0.11.2--py37h637b7d7_1",
             "stringtie": "quay.io/biocontainers/stringtie:1.3.4--py35_0",
             "collect-columns": "quay.io/biocontainers/collect-columns:0.2.0--py_1"
+            "samtools": "quay.io/biocontainers/samtools:1.8--h46bd0b3_5"
         }
     }
 
@@ -76,7 +77,7 @@ workflow MultiBamExpressionQuantification {
         call samtools.SortByName as samtoolsSort {
             input:
                 bamFile = bamFile.file,
-                dockerImage = "quay.io/biocontainers/samtools:1.8--h46bd0b3_5"
+                dockerImage = dockerImages["samtools"]
         }
 
         Map[String, String] HTSeqStrandOptions = {"FR": "yes", "RF": "reverse", "None": "no"}
