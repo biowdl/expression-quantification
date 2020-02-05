@@ -76,7 +76,7 @@ workflow MultiBamExpressionQuantification {
         call samtools.SortByName as samtoolsSort {
             input:
                 bamFile = bamFile.file,
-                dockerImage = dockerImages["samtools"]
+                dockerImage = "quay.io/biocontainers/samtools:1.8--h46bd0b3_5"
         }
 
         Map[String, String] HTSeqStrandOptions = {"FR": "yes", "RF": "reverse", "None": "no"}
