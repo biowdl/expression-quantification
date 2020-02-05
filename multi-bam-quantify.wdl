@@ -18,7 +18,7 @@ workflow MultiBamExpressionQuantification {
         Map[String, String] dockerImages = {
             "htseq": "quay.io/biocontainers/htseq:0.11.2--py37h637b7d7_1",
             "stringtie": "quay.io/biocontainers/stringtie:1.3.4--py35_0",
-            "collect-columns": "quay.io/biocontainers/collect-columns:0.2.0--py_1"
+            "collect-columns": "quay.io/biocontainers/collect-columns:0.2.0--py_1",
             "samtools": "quay.io/biocontainers/samtools:1.8--h46bd0b3_5"
         }
     }
