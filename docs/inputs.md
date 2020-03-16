@@ -1,6 +1,6 @@
 ---
 layout: default
-title: Inputs
+title: "Inputs: MultiBamExpressionQuantification"
 ---
 
 # Inputs for MultiBamExpressionQuantification
@@ -28,7 +28,7 @@ MultiBamExpressionQuantification.
 <dt id="MultiBamExpressionQuantification.detectNovelTranscripts"><a href="#MultiBamExpressionQuantification.detectNovelTranscripts">MultiBamExpressionQuantification.detectNovelTranscripts</a></dt>
 <dd>
     <i>Boolean </i><i>&mdash; Default:</i> <code>if defined(referenceGtfFile) then false else true</code><br />
-    Whether or not a transcripts assembly should be used. If set to true Stringtie will be used to create a new GTF file based on the BAM files. This generated GTF file will be used for expression quantification. If `referenceGtfFile` is also provided this refernce GTF will be used to guide the assembly.
+    Whether or not a transcripts assembly should be used. If set to true Stringtie will be used to create a new GTF file based on the BAM files. This generated GTF file will be used for expression quantification. If `referenceGtfFile` is also provided this reference GTF will be used to guide the assembly.
 </dd>
 <dt id="MultiBamExpressionQuantification.outputDir"><a href="#MultiBamExpressionQuantification.outputDir">MultiBamExpressionQuantification.outputDir</a></dt>
 <dd>
