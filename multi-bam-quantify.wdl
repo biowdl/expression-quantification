@@ -40,6 +40,7 @@ workflow MultiBamExpressionQuantification {
             "collect-columns": "quay.io/biocontainers/collect-columns:0.2.0--py_1"
         }
     }
+    meta {allowNestedInputs: true}
 
     String stringtieDir = outputDir + "/stringtie/"
     String stringtieAssemblyDir = outputDir + "/stringtie/assembly/"
