@@ -35,8 +35,8 @@ workflow MultiBamExpressionQuantification {
         Array[String]+? additionalAttributes
 
         Map[String, String] dockerImages = {
-            "htseq": "quay.io/biocontainers/htseq:0.11.2--py37h637b7d7_1",
-            "stringtie": "quay.io/biocontainers/stringtie:1.3.4--py35_0",
+            "htseq": "quay.io/biocontainers/htseq:0.12.4--py37hb3f55d8_0",
+            "stringtie": "quay.io/biocontainers/stringtie:2.1.2--h7e0af3c_1",
             "collect-columns": "quay.io/biocontainers/collect-columns:0.2.0--py_1"
         }
     }
