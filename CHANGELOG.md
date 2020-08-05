@@ -9,7 +9,7 @@ This document is user facing. Please word the changes in such a way
 that users understand how the changes affect the new version.
 -->
 
-version 1.3.0-develop
+version 1.3.0
 ---------------------------
 + Updated default docker images.
 + Tasks were updated to contain the `time_minutes` runtime attribute and
