@@ -58,7 +58,7 @@ MultiBamExpressionQuantification.
 </dd>
 <dt id="MultiBamExpressionQuantification.dockerImages"><a href="#MultiBamExpressionQuantification.dockerImages">MultiBamExpressionQuantification.dockerImages</a></dt>
 <dd>
-    <i>Map[String,String] </i><i>&mdash; Default:</i> <code>{"htseq": "quay.io/biocontainers/htseq:0.11.2--py37h637b7d7_1", "stringtie": "quay.io/biocontainers/stringtie:1.3.4--py35_0", "collect-columns": "quay.io/biocontainers/collect-columns:0.2.0--py_1"}</code><br />
+    <i>Map[String,String] </i><i>&mdash; Default:</i> <code>{"htseq": "quay.io/biocontainers/htseq:0.12.4--py37hb3f55d8_0", "stringtie": "quay.io/biocontainers/stringtie:2.1.2--h7e0af3c_1", "collect-columns": "quay.io/biocontainers/collect-columns:0.2.0--py_1"}</code><br />
     The docker images used. Changing this may result in errors which the developers may choose not to address.
 </dd>
 <dt id="MultiBamExpressionQuantification.htSeqCount.additionalAttributes"><a href="#MultiBamExpressionQuantification.htSeqCount.additionalAttributes">MultiBamExpressionQuantification.htSeqCount.additionalAttributes</a></dt>
@@ -71,11 +71,6 @@ MultiBamExpressionQuantification.
     <i>String? </i><br />
     Equivalent to the --type option of htseq-count.
 </dd>
-<dt id="MultiBamExpressionQuantification.htSeqCount.format"><a href="#MultiBamExpressionQuantification.htSeqCount.format">MultiBamExpressionQuantification.htSeqCount.format</a></dt>
-<dd>
-    <i>String </i><i>&mdash; Default:</i> <code>"bam"</code><br />
-    Equivalent to the -f option of htseq-count.
-</dd>
 <dt id="MultiBamExpressionQuantification.htSeqCount.idattr"><a href="#MultiBamExpressionQuantification.htSeqCount.idattr">MultiBamExpressionQuantification.htSeqCount.idattr</a></dt>
 <dd>
     <i>String? </i><br />
@@ -83,13 +78,23 @@ MultiBamExpressionQuantification.
 </dd>
 <dt id="MultiBamExpressionQuantification.htSeqCount.memory"><a href="#MultiBamExpressionQuantification.htSeqCount.memory">MultiBamExpressionQuantification.htSeqCount.memory</a></dt>
 <dd>
-    <i>String </i><i>&mdash; Default:</i> <code>"40G"</code><br />
+    <i>String </i><i>&mdash; Default:</i> <code>"8G"</code><br />
     The amount of memory the job requires in GB.
+</dd>
+<dt id="MultiBamExpressionQuantification.htSeqCount.nprocesses"><a href="#MultiBamExpressionQuantification.htSeqCount.nprocesses">MultiBamExpressionQuantification.htSeqCount.nprocesses</a></dt>
+<dd>
+    <i>Int </i><i>&mdash; Default:</i> <code>1</code><br />
+    Number of processes to run htseq with.
 </dd>
 <dt id="MultiBamExpressionQuantification.htSeqCount.order"><a href="#MultiBamExpressionQuantification.htSeqCount.order">MultiBamExpressionQuantification.htSeqCount.order</a></dt>
 <dd>
     <i>String </i><i>&mdash; Default:</i> <code>"pos"</code><br />
     Equivalent to the -r option of htseq-count.
+</dd>
+<dt id="MultiBamExpressionQuantification.htSeqCount.timeMinutes"><a href="#MultiBamExpressionQuantification.htSeqCount.timeMinutes">MultiBamExpressionQuantification.htSeqCount.timeMinutes</a></dt>
+<dd>
+    <i>Int </i><i>&mdash; Default:</i> <code>10 + ceil((size(inputBams,"G") * 60))</code><br />
+    The maximum amount of time the job will run in minutes.
 </dd>
 <dt id="MultiBamExpressionQuantification.mergedHTSeqFragmentsPerGenes.featureAttribute"><a href="#MultiBamExpressionQuantification.mergedHTSeqFragmentsPerGenes.featureAttribute">MultiBamExpressionQuantification.mergedHTSeqFragmentsPerGenes.featureAttribute</a></dt>
 <dd>
@@ -106,10 +111,20 @@ MultiBamExpressionQuantification.
     <i>Boolean </i><i>&mdash; Default:</i> <code>false</code><br />
     Equivalent to the -H flag of collect-columns.
 </dd>
+<dt id="MultiBamExpressionQuantification.mergedHTSeqFragmentsPerGenes.memoryGb"><a href="#MultiBamExpressionQuantification.mergedHTSeqFragmentsPerGenes.memoryGb">MultiBamExpressionQuantification.mergedHTSeqFragmentsPerGenes.memoryGb</a></dt>
+<dd>
+    <i>Int </i><i>&mdash; Default:</i> <code>4 + ceil((0.5 * length(inputTables)))</code><br />
+    The maximum amount of memory the job will need in GB
+</dd>
 <dt id="MultiBamExpressionQuantification.mergedHTSeqFragmentsPerGenes.separator"><a href="#MultiBamExpressionQuantification.mergedHTSeqFragmentsPerGenes.separator">MultiBamExpressionQuantification.mergedHTSeqFragmentsPerGenes.separator</a></dt>
 <dd>
     <i>Int? </i><br />
     Equivalent to the -s option of collect-columns.
+</dd>
+<dt id="MultiBamExpressionQuantification.mergedHTSeqFragmentsPerGenes.timeMinutes"><a href="#MultiBamExpressionQuantification.mergedHTSeqFragmentsPerGenes.timeMinutes">MultiBamExpressionQuantification.mergedHTSeqFragmentsPerGenes.timeMinutes</a></dt>
+<dd>
+    <i>Int </i><i>&mdash; Default:</i> <code>10</code><br />
+    The maximum amount of time the job will run in minutes.
 </dd>
 <dt id="MultiBamExpressionQuantification.mergedHTSeqFragmentsPerGenes.valueColumn"><a href="#MultiBamExpressionQuantification.mergedHTSeqFragmentsPerGenes.valueColumn">MultiBamExpressionQuantification.mergedHTSeqFragmentsPerGenes.valueColumn</a></dt>
 <dd>
@@ -126,10 +141,20 @@ MultiBamExpressionQuantification.
     <i>Int? </i><br />
     Equivalent to the -f option of collect-columns.
 </dd>
+<dt id="MultiBamExpressionQuantification.mergedStringtieFPKMs.memoryGb"><a href="#MultiBamExpressionQuantification.mergedStringtieFPKMs.memoryGb">MultiBamExpressionQuantification.mergedStringtieFPKMs.memoryGb</a></dt>
+<dd>
+    <i>Int </i><i>&mdash; Default:</i> <code>4 + ceil((0.5 * length(inputTables)))</code><br />
+    The maximum amount of memory the job will need in GB
+</dd>
 <dt id="MultiBamExpressionQuantification.mergedStringtieFPKMs.separator"><a href="#MultiBamExpressionQuantification.mergedStringtieFPKMs.separator">MultiBamExpressionQuantification.mergedStringtieFPKMs.separator</a></dt>
 <dd>
     <i>Int? </i><br />
     Equivalent to the -s option of collect-columns.
+</dd>
+<dt id="MultiBamExpressionQuantification.mergedStringtieFPKMs.timeMinutes"><a href="#MultiBamExpressionQuantification.mergedStringtieFPKMs.timeMinutes">MultiBamExpressionQuantification.mergedStringtieFPKMs.timeMinutes</a></dt>
+<dd>
+    <i>Int </i><i>&mdash; Default:</i> <code>10</code><br />
+    The maximum amount of time the job will run in minutes.
 </dd>
 <dt id="MultiBamExpressionQuantification.mergedStringtieTPMs.featureAttribute"><a href="#MultiBamExpressionQuantification.mergedStringtieTPMs.featureAttribute">MultiBamExpressionQuantification.mergedStringtieTPMs.featureAttribute</a></dt>
 <dd>
@@ -141,10 +166,20 @@ MultiBamExpressionQuantification.
     <i>Int? </i><br />
     Equivalent to the -f option of collect-columns.
 </dd>
+<dt id="MultiBamExpressionQuantification.mergedStringtieTPMs.memoryGb"><a href="#MultiBamExpressionQuantification.mergedStringtieTPMs.memoryGb">MultiBamExpressionQuantification.mergedStringtieTPMs.memoryGb</a></dt>
+<dd>
+    <i>Int </i><i>&mdash; Default:</i> <code>4 + ceil((0.5 * length(inputTables)))</code><br />
+    The maximum amount of memory the job will need in GB
+</dd>
 <dt id="MultiBamExpressionQuantification.mergedStringtieTPMs.separator"><a href="#MultiBamExpressionQuantification.mergedStringtieTPMs.separator">MultiBamExpressionQuantification.mergedStringtieTPMs.separator</a></dt>
 <dd>
     <i>Int? </i><br />
     Equivalent to the -s option of collect-columns.
+</dd>
+<dt id="MultiBamExpressionQuantification.mergedStringtieTPMs.timeMinutes"><a href="#MultiBamExpressionQuantification.mergedStringtieTPMs.timeMinutes">MultiBamExpressionQuantification.mergedStringtieTPMs.timeMinutes</a></dt>
+<dd>
+    <i>Int </i><i>&mdash; Default:</i> <code>10</code><br />
+    The maximum amount of time the job will run in minutes.
 </dd>
 <dt id="MultiBamExpressionQuantification.mergeStringtieGtf.keepMergedTranscriptsWithRetainedIntrons"><a href="#MultiBamExpressionQuantification.mergeStringtieGtf.keepMergedTranscriptsWithRetainedIntrons">MultiBamExpressionQuantification.mergeStringtieGtf.keepMergedTranscriptsWithRetainedIntrons</a></dt>
 <dd>
@@ -186,9 +221,14 @@ MultiBamExpressionQuantification.
     <i>Float? </i><br />
     Equivalent to the -T option of 'stringtie --merge'.
 </dd>
+<dt id="MultiBamExpressionQuantification.mergeStringtieGtf.timeMinutes"><a href="#MultiBamExpressionQuantification.mergeStringtieGtf.timeMinutes">MultiBamExpressionQuantification.mergeStringtieGtf.timeMinutes</a></dt>
+<dd>
+    <i>Int </i><i>&mdash; Default:</i> <code>1 + ceil((size(gtfFiles,"G") * 20))</code><br />
+    The maximum amount of time the job will run in minutes.
+</dd>
 <dt id="MultiBamExpressionQuantification.stringtie.memory"><a href="#MultiBamExpressionQuantification.stringtie.memory">MultiBamExpressionQuantification.stringtie.memory</a></dt>
 <dd>
-    <i>String </i><i>&mdash; Default:</i> <code>"10G"</code><br />
+    <i>String </i><i>&mdash; Default:</i> <code>"2G"</code><br />
     The amount of memory needed for this task in GB.
 </dd>
 <dt id="MultiBamExpressionQuantification.stringtie.threads"><a href="#MultiBamExpressionQuantification.stringtie.threads">MultiBamExpressionQuantification.stringtie.threads</a></dt>
@@ -196,15 +236,25 @@ MultiBamExpressionQuantification.
     <i>Int </i><i>&mdash; Default:</i> <code>1</code><br />
     The number of threads to use.
 </dd>
+<dt id="MultiBamExpressionQuantification.stringtie.timeMinutes"><a href="#MultiBamExpressionQuantification.stringtie.timeMinutes">MultiBamExpressionQuantification.stringtie.timeMinutes</a></dt>
+<dd>
+    <i>Int </i><i>&mdash; Default:</i> <code>1 + ceil((size(bam,"G") * 60 / threads))</code><br />
+    The maximum amount of time the job will run in minutes.
+</dd>
 <dt id="MultiBamExpressionQuantification.stringtieAssembly.memory"><a href="#MultiBamExpressionQuantification.stringtieAssembly.memory">MultiBamExpressionQuantification.stringtieAssembly.memory</a></dt>
 <dd>
-    <i>String </i><i>&mdash; Default:</i> <code>"10G"</code><br />
+    <i>String </i><i>&mdash; Default:</i> <code>"2G"</code><br />
     The amount of memory needed for this task in GB.
 </dd>
 <dt id="MultiBamExpressionQuantification.stringtieAssembly.threads"><a href="#MultiBamExpressionQuantification.stringtieAssembly.threads">MultiBamExpressionQuantification.stringtieAssembly.threads</a></dt>
 <dd>
     <i>Int </i><i>&mdash; Default:</i> <code>1</code><br />
     The number of threads to use.
+</dd>
+<dt id="MultiBamExpressionQuantification.stringtieAssembly.timeMinutes"><a href="#MultiBamExpressionQuantification.stringtieAssembly.timeMinutes">MultiBamExpressionQuantification.stringtieAssembly.timeMinutes</a></dt>
+<dd>
+    <i>Int </i><i>&mdash; Default:</i> <code>1 + ceil((size(bam,"G") * 60 / threads))</code><br />
+    The maximum amount of time the job will run in minutes.
 </dd>
 </dl>
 </details>
