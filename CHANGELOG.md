@@ -13,7 +13,7 @@ version 1.4.0-dev
 -----------------
 + When multiple TPM/FPKM values are returned for a single gene by 
   stringtie, they will now be added together in the multi-sample
-  expression tables. Previously one the last value encountered would be
+  expression tables. Previously only the last value encountered would be
   used.  
 + Updated default docker image for collect-columns (now uses version 1.0.0
   instead of 0.2.0).
