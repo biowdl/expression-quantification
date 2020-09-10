@@ -37,7 +37,7 @@ workflow MultiBamExpressionQuantification {
         Map[String, String] dockerImages = {
             "htseq": "quay.io/biocontainers/htseq:0.12.4--py37hb3f55d8_0",
             "stringtie": "quay.io/biocontainers/stringtie:2.1.2--h7e0af3c_1",
-            "collect-columns": "quay.io/biocontainers/collect-columns:0.2.0--py_1"
+            "collect-columns": "quay.io/biocontainers/collect-columns:1.0.0--py_0"
         }
     }
     meta {allowNestedInputs: true}
@@ -113,6 +113,7 @@ workflow MultiBamExpressionQuantification {
             valueColumn = 8,
             sampleNames = sampleId,
             header = true,
+            sumOnDuplicateId = true,
             additionalAttributes = additionalAttributes,
             referenceGtf = select_first([mergeStringtieGtf.mergedGtfFile, referenceGtfFile]),
             dockerImage = dockerImages["collect-columns"]
@@ -125,6 +126,7 @@ workflow MultiBamExpressionQuantification {
             valueColumn = 7,
             sampleNames = sampleId,
             header = true,
+            sumOnDuplicateId = true,
             additionalAttributes = additionalAttributes,
             referenceGtf = select_first([mergeStringtieGtf.mergedGtfFile, referenceGtfFile]),
             dockerImage = dockerImages["collect-columns"]
