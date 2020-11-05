@@ -64,7 +64,6 @@ BAM files need to be given as a list with one item per sample. Each of the
 items should be an object containing a `"Left"` element (the sample id) and a
 `"Right"` element (the BAM file and its index) following the structure as shown
 here:
-
 ```json
 {
     "left": "Sample identifier",
