@@ -31,7 +31,7 @@ workflow MultiBamExpressionQuantification {
         String outputDir = "."
         String strandedness
         Boolean detectNovelTranscripts = if defined(referenceGtfFile) then false else true
-        Boolean runStringtie = true
+        Boolean runStringtieQuantification = true
 
         # Not providing the reference gtf will have stringtie do an unguided assembly.
         File? referenceGtfFile
