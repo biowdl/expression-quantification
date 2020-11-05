@@ -1,5 +1,4 @@
 # Expression-Quantification
-
 This repository contains the [Biowdl](https://github.com/biowdl) 
 workflows usable for quantifying transcriptional expression measures.
 There is currently one pipeline available: `multi-bam-quantify`,
@@ -8,7 +7,6 @@ and [StringTie](https://ccb.jhu.edu/software/stringtie/) to determine
 various expression measures.
 
 ## Documentation
-
 Documentation for this workflow can be found 
 [here](https://biowdl.github.io/expression-quantification/).
 
@@ -17,7 +15,6 @@ These workflows are part of [Biowdl](https://github.com/biowdl)
 developed by the SASC team at [Leiden University Medical Center](https://www.lumc.nl/). 
 
 ## Contact
-
 <p>
   <!-- Obscure e-mail address for spammers -->
 For any question related to Expression-Quantification, please use the
