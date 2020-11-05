@@ -84,7 +84,7 @@ workflow MultiBamExpressionQuantification {
         IndexedBamFile bamFile = sampleBam.right
         String sampleId = sampleBam.left
 
-        if (runStringtie){
+        if (runStringtieQuantification){
             call stringtie_task.Stringtie as stringtie {
                 input:
                     bam = bamFile.file,
@@ -111,7 +111,7 @@ workflow MultiBamExpressionQuantification {
         }
     }
 
-    if (runStringtie) {
+    if (runStringtieQuantification) {
         # Merge count tables into one multisample count table per count type.
         call collectColumns.CollectColumns as mergedStringtieTPMs {
             input:

@@ -1,7 +1,7 @@
 {
     "MultiBamExpressionQuantification.strandedness": "None",
     "MultiBamExpressionQuantification.referenceGtfFile": "tests/data/reference.gtf",
-    "MultiBamExpressionQuantification.runStringtie": false,
+    "MultiBamExpressionQuantification.runStringtieQuantification": false,
     "MultiBamExpressionQuantification.bams": [
         {
             "left": "sample1",
