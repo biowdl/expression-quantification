@@ -52,10 +52,10 @@ For an overview of all available inputs, see [this page](./inputs.html).
 
 ```json
 {
-  "MultiBamExpressionQuantification.bams": "A list of BAM files and sample identifiers (see 'BAM file input' below).",
-  "MultiBamExpressionQuantification.strandedness": "The strandedness of the samples: FR (forward-reverse), RF (reverse-forward) or None.",
-  "MultiBamExpressionQuantification.outputDir": "The path to the output directory.",
-  "MultiBamExpressionQuantification.referenceGtfFile": "The path to the annotations GTF file. If not specified, Stringtie will be run unguided and the GTF file it produces will be used for HTSeq-Count.",
+    "MultiBamExpressionQuantification.bams": "A list of BAM files and sample identifiers (see 'BAM file input' below).",
+    "MultiBamExpressionQuantification.strandedness": "The strandedness of the samples: FR (forward-reverse), RF (reverse-forward) or None.",
+    "MultiBamExpressionQuantification.outputDir": "The path to the output directory.",
+    "MultiBamExpressionQuantification.referenceGtfFile": "The path to the annotations GTF file. If not specified, Stringtie will be run unguided and the GTF file it produces will be used for HTSeq-Count.",
 }
 ```
 
