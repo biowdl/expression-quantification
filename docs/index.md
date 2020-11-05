@@ -23,6 +23,7 @@ First download the latest version of the pipeline wdl file(s)
 from the
 [github page](https://github.com/biowdl/expression-quantification).
 
+The pipeline can then be run with the following command:
 ```bash
 java \
     -jar cromwell-<version>.jar \
@@ -30,6 +31,15 @@ java \
     -o options.json \
     -i inputs.json \
     multi-bam-quantify.wdl
+```
+
+Where `options.json` contains the following json:
+```json
+{
+    "final_workflow_outputs_dir": "/path/to/outputs",
+    "use_relative_output_paths": true,
+    "final_workflow_log_dir": "/path/to/logs/folder"
+}
 ```
 
 ### Inputs
