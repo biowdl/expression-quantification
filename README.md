@@ -11,8 +11,8 @@ Documentation for this workflow can be found
 [here](https://biowdl.github.io/expression-quantification/).
 
 ## About
-These workflows are part of [Biowdl](https://github.com/biowdl)
-developed by the SASC team at [Leiden University Medical Center](https://www.lumc.nl/). 
+This workflow is part of [Biowdl](https://github.com/biowdl)
+developed by the SASC team at [Leiden University Medical Center](https://www.lumc.nl/).
 
 ## Contact
 <p>
