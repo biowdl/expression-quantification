@@ -163,6 +163,7 @@ workflow MultiBamExpressionQuantification {
     }
 
     parameter_meta {
+        # inputs
         bams: {description: "A list of pairs in which the left item is a sample Id and the right item an object containing the paths to that samples BAM file and its index.", category: "required"}
         outputDir: {description: "The directory to which the outputs will be written.", category: "common"}
         strandedness: {description: "The strandedness of the RNA sequencing library preparation. One of \"None\" (unstranded), \"FR\" (forward-reverse: first read equal transcript) or \"RF\" (reverse-forward: second read equals transcript).", category: "required"}
@@ -171,5 +172,13 @@ workflow MultiBamExpressionQuantification {
         referenceGtfFile: {description: "A reference GTF file. If detectNovelTranscripts is set to true then this reference GTF will be used as a guide during transcript assembly, otherwise this GTF file is used directly as the annotation source for read counting. If undefined `detectNovelTranscripts` will be set to true by default.", category: "common"}
         additionalAttributes: {description: "Additional attributes which should be taken from the GTF used for quantification and added to the merged expression value tables.", category: "advanced"}
         dockerImages: {description: "The docker images used. Changing this may result in errors which the developers may choose not to address.", category: "advanced"}
+
+        # outputs
+        fragmentsPerGeneTable: {description: ""}
+        sampleFragmentsPerGeneTables: {description: ""}
+        sampleGtfFiles: {description: ""}
+        FPKMTable: {description: ""}
+        TPMTable: {description: ""}
+        mergedGtfFile: {description: ""}
     }
 }
