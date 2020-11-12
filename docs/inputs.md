@@ -7,7 +7,7 @@
 ### Required inputs
 <p name="MultiBamExpressionQuantification.bams">
         <b>MultiBamExpressionQuantification.bams</b><br />
-        <i>Array[Pair[String,struct(file : File, index : File, md5sum : String?)]]+ &mdash; Default: None</i><br />
+        <i>Array[Pair[String,IndexedBamFile]]+ &mdash; Default: None</i><br />
         A list of pairs in which the left item is a sample Id and the right item an object containing the paths to that samples BAM file and its index.
 </p>
 <p name="MultiBamExpressionQuantification.strandedness">
@@ -32,10 +32,10 @@
         <i>File? &mdash; Default: None</i><br />
         A reference GTF file. If detectNovelTranscripts is set to true then this reference GTF will be used as a guide during transcript assembly, otherwise this GTF file is used directly as the annotation source for read counting. If undefined `detectNovelTranscripts` will be set to true by default.
 </p>
-<p name="MultiBamExpressionQuantification.runStringtie">
-        <b>MultiBamExpressionQuantification.runStringtie</b><br />
+<p name="MultiBamExpressionQuantification.runStringtieQuantification">
+        <b>MultiBamExpressionQuantification.runStringtieQuantification</b><br />
         <i>Boolean &mdash; Default: true</i><br />
-        Option to disable running stringtie.
+        Option to disable running stringtie for quantification. This does not affect the usage of stringtie for novel transcript detection.
 </p>
 <p name="MultiBamExpressionQuantification.stringtieAssembly.geneAbundanceFile">
         <b>MultiBamExpressionQuantification.stringtieAssembly.geneAbundanceFile</b><br />
