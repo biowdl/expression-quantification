@@ -1,7 +1,7 @@
 # Expression-Quantification
 This repository contains the [Biowdl](https://github.com/biowdl)
-workflows usable for quantifying transcriptional expression measures.
-There is currently one pipeline available: `multi-bam-quantify`,
+workflow usable for quantifying transcriptional expression measures.
+There is currently one workflow available: `multi-bam-quantify`,
 which uses [HTSeq-Count](http://htseq.readthedocs.io/en/master/count.html)
 and [StringTie](https://ccb.jhu.edu/software/stringtie/) to determine
 various expression measures.
