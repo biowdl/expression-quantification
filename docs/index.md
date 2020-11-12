@@ -124,7 +124,7 @@ The `multi-bam-quantify` workflow produces two directories:
 ## Contact
 <p>
   <!-- Obscure e-mail address for spammers -->
-For any questions about running this workflow and feature request (such as
+For any questions about running this workflow and feature requests (such as
 adding additional tools and options), please use the
 <a href='https://github.com/biowdl/expression-quantification/issues'>github issue tracker</a>
 or contact the SASC team directly at: 
