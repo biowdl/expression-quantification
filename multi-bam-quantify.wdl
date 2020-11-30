@@ -38,8 +38,8 @@ workflow MultiBamExpressionQuantification {
         Array[String]+? additionalAttributes
 
         Map[String, String] dockerImages = {
-            "htseq": "quay.io/biocontainers/htseq:0.12.4--py37hb3f55d8_0",
-            "stringtie": "quay.io/biocontainers/stringtie:2.1.2--h7e0af3c_1",
+            "htseq": "quay.io/biocontainers/htseq:0.12.4--py37h0498b6d_2",
+            "stringtie": "quay.io/biocontainers/stringtie:2.1.4--h7e0af3c_0",
             "collect-columns": "quay.io/biocontainers/collect-columns:1.0.0--py_0"
         }
     }
@@ -174,11 +174,11 @@ workflow MultiBamExpressionQuantification {
         dockerImages: {description: "The docker images used. Changing this may result in errors which the developers may choose not to address.", category: "advanced"}
 
         # outputs
-        fragmentsPerGeneTable: {description: ""}
-        sampleFragmentsPerGeneTables: {description: ""}
-        sampleGtfFiles: {description: ""}
-        FPKMTable: {description: ""}
-        TPMTable: {description: ""}
-        mergedGtfFile: {description: ""}
+        fragmentsPerGeneTable: {description: "All htseq count table combined into a single file."}
+        sampleFragmentsPerGeneTables: {description: "A collection of tables per sample with counts for each feature, followed by the special counters, which count reads that were not counted for any feature for various reasons."}
+        sampleGtfFiles: {description: "A collection of all sample GTF files."}
+        FPKMTable: {description: "All stringtie FPKM tables combined into a single file."}
+        TPMTable: {description: "All stringtie TPM tables combined into a single file."}
+        mergedGtfFile: {description: "All transcripts merged into a single GTF file."}
     }
 }
