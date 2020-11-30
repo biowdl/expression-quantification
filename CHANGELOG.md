@@ -2,7 +2,6 @@ Changelog
 ==========
 
 <!--
-
 Newest changes should be on top.
 
 This document is user facing. Please word the changes in such a way
@@ -12,10 +11,11 @@ that users understand how the changes affect the new version.
 version 1.4.0-dev
 -----------------
 + Downgrade stringtie to version 1.3.6.
-+ When multiple TPM/FPKM values are returned for a single gene by 
++ Make it possible to not run Stringtie.
++ When multiple TPM/FPKM values are returned for a single gene by
   stringtie, they will now be added together in the multi-sample
   expression tables. Previously only the last value encountered would be
-  used.  
+  used.
 + Updated default docker image for collect-columns (now uses version 1.0.0
   instead of 0.2.0).
 
@@ -34,15 +34,15 @@ version 1.2.0
 + Added inputs overview to the docs.
 + Added parameter_meta.
 + Added wdl-aid to linting.
-+ Updated default htseq image to version 0.11.2
++ Updated default htseq image to version 0.11.2.
 + Add miniwdl to linting.
 
 version 1.1.0
 ---------------------------
-+ Update tasks so they pass the correct memory requirements to the 
++ Update tasks so they pass the correct memory requirements to the
   execution engine. Memory requirements are set on a per-task (not
   per-core) basis.
 
 version 1.0.0
 ---------------------------
-+ Updated documentation
++ Updated documentation.
