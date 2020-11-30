@@ -10,7 +10,7 @@ that users understand how the changes affect the new version.
 
 version 1.4.0-dev
 -----------------
-+ Update StringTie to version 2.1.4.
++ Downgrade stringtie to version 1.3.6.
 + Make it possible to not run Stringtie.
 + When multiple TPM/FPKM values are returned for a single gene by
   stringtie, they will now be added together in the multi-sample
