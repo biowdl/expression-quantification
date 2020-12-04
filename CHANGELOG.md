@@ -10,14 +10,14 @@ that users understand how the changes affect the new version.
 
 version 1.4.0-dev
 -----------------
-+ Update StringTie to version 2.1.4.
++ Downgrade stringtie to version 1.3.6.
 + Make it possible to not run Stringtie.
 + When multiple TPM/FPKM values are returned for a single gene by
   stringtie, they will now be added together in the multi-sample
   expression tables. Previously only the last value encountered would be
   used.
-+ Updated default docker image for collect-columns (now uses version 1.0.0
-  instead of 0.2.0).
++ Updated default docker image for collect-columns (now uses
+  version 1.0.0 instead of 0.2.0).
 
 
 version 1.3.0
