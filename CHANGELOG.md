@@ -9,7 +9,7 @@ that users understand how the changes affect the new version.
 -->
 
 version 1.4.0-dev
------------------
+---------------------------
 + Downgrade stringtie to version 1.3.6.
 + Make it possible to not run Stringtie.
 + When multiple TPM/FPKM values are returned for a single gene by
@@ -28,7 +28,7 @@ version 1.3.0
   take to run.
 
 version 1.2.0
------------------
+---------------------------
 + Add proper copyright headers to WDL files. So the free software license
   is clear to end users who wish to adapt and modify.
 + Added inputs overview to the docs.
