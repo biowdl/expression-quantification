@@ -10,6 +10,8 @@ that users understand how the changes affect the new version.
 
 version 1.4.0-dev
 ---------------------------
++ Replaced Stringtie merge with gffcompare for merging of stringtie
+  assembly results.
 + Downgrade stringtie to version 1.3.6.
 + Make it possible to not run Stringtie.
 + When multiple TPM/FPKM values are returned for a single gene by
