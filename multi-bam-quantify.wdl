@@ -76,7 +76,8 @@ workflow MultiBamExpressionQuantification {
         call gffcompare.GffCompare as mergeStringtieGtf {
             input:
                 inputGtfFiles = stringtieAssembly.assembledTranscripts,
-                outPrefix = stringtieAssemblyDir + "/merged",
+                outputDir = stringtieAssemblyDir,
+                outPrefix = "merged",
                 C = true,
                 dockerImage = dockerImages["gffcompare"]
         }
