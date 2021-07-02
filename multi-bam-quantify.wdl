@@ -65,7 +65,6 @@ workflow MultiBamExpressionQuantification {
                     assembledTranscriptsFile = stringtieAssemblyDir + sampleIdAssembly + ".gtf",
                     firstStranded = if strandedness == "RF" then true else false,
                     secondStranded = if strandedness == "FR" then true else false,
-                    minimumCoverage = 3, #FIXME
                     referenceGtf = referenceGtfFile,
                     skipNovelTranscripts = false,
                     dockerImage = dockerImages["stringtie"]
